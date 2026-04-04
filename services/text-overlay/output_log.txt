@@ -1,0 +1,45 @@
+2025-06-21 15:23:23,001 - auto_volume_processor - INFO - Found 3 music files in C:\Users\Isaia\Documents\WordsOnText\downloaded_songs
+2025-06-21 15:23:23,001 - auto_volume_processor - INFO - Processing videos from: C:\Users\Isaia\Documents\Coding\N8N\shared\videos
+2025-06-21 15:23:23,001 - auto_volume_processor - INFO - Output directory: C:\Users\Isaia\Documents\WordsOnText\output_videos
+2025-06-21 15:23:23,003 - auto_volume_processor - INFO - Found 1 videos to process
+2025-06-21 15:23:23,003 - auto_volume_processor - INFO - Using 3 music tracks
+2025-06-21 15:23:23,003 - auto_volume_processor - INFO - Processing video 1/1: 0024d0ff50d04b2eba719fec130a0b74.mp4
+2025-06-21 15:23:23,003 - auto_volume_processor - INFO - Processing video: 0024d0ff50d04b2eba719fec130a0b74.mp4
+2025-06-21 15:23:23,336 - auto_volume_processor - INFO - Checking if video already has background music...
+2025-06-21 15:23:23,336 - py.warnings - WARNING - C:\Users\Isaia\AppData\Local\Programs\Python\Python38\lib\site-packages\moviepy\audio\AudioClip.py:113: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  return stacker(self.iter_chunks(fps=fps, quantize=quantize,
+
+2025-06-21 15:23:23,628 - auto_volume_processor - INFO - No background music detected in original video.
+2025-06-21 15:23:23,629 - auto_volume_processor - INFO - Music detection metrics: {'spectral_flatness': 0.09117929230523962, 'low_freq_ratio': 0.41005921108235827, 'volume_variation': 0.6139274131327891, 'spectral_centroid': 1688.2214677493916, 'sustained_volume': 0.01857448275902343}
+2025-06-21 15:23:23,629 - auto_volume_processor - INFO - Adding music: Drvmmer - Imagination (feat. Artika) - Lost In Dreams.mp3
+2025-06-21 15:23:23,629 - auto_volume_processor - INFO - Analyzing audio volume for: 0024d0ff50d04b2eba719fec130a0b74.mp4
+2025-06-21 15:23:24,041 - auto_volume_processor - INFO - Original audio volume metric (RMS): 0.066944
+2025-06-21 15:23:24,041 - auto_volume_processor - INFO - Calculated optimal volume: -22.50 dB
+2025-06-21 15:23:24,054 - auto_volume_processor - INFO - Using calculated volume level: -22.50 dB
+2025-06-21 15:23:24,194 - auto_volume_processor - INFO - Trimming music to match video duration (38.83s)
+2025-06-21 15:23:24,194 - auto_volume_processor - INFO - Setting music volume to -22.50 dB (factor: 0.0750)
+2025-06-21 15:23:24,194 - auto_volume_processor - INFO - Mixing music with original audio
+2025-06-21 15:23:24,194 - auto_volume_processor - INFO - Writing output video to: C:\Users\Isaia\Documents\WordsOnText\output_videos\autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4
+Moviepy - Building video C:\Users\Isaia\Documents\WordsOnText\output_videos\autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4.
+MoviePy - Writing audio in autovolume_0024d0ff50d04b2eba719fec130a0b74TEMP_MPY_wvf_snd.mp4
+
+chunk:   0%|          | 0/857 [00:00<?, ?it/s, now=None]
+chunk:   4%|4         | 35/857 [00:00<00:02, 349.90it/s, now=None]
+chunk:  27%|##7       | 234/857 [00:00<00:00, 1314.22it/s, now=None]
+chunk:  51%|#####1    | 438/857 [00:00<00:00, 1643.69it/s, now=None]
+chunk:  74%|#######3  | 633/857 [00:00<00:00, 1761.05it/s, now=None]
+chunk:  97%|#########6| 828/857 [00:00<00:00, 1814.57it/s, now=None]
+MoviePy - Done.
+                                                                    
+Moviepy - Writing video C:\Users\Isaia\Documents\WordsOnText\output_videos\autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4
+
+
+t:   0%|          | 0/1165 [00:00<?, ?it/s, now=None]2025-06-21 15:23:24,778 - auto_volume_processor - ERROR - Error processing video: [Errno 22] Invalid argument
+
+MoviePy error: FFMPEG encountered the following error while writing file C:\Users\Isaia\Documents\WordsOnText\output_videos\autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4:
+
+ b'C:\\Users\\Isaia\\Documents\\WordsOnText\\output_videos\\autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4: Permission denied\r\n'
+
+                                                     
+2025-06-21 15:23:24,794 - auto_volume_processor - INFO - Skipping video 0024d0ff50d04b2eba719fec130a0b74.mp4 (likely already has music)
+2025-06-21 15:23:24,795 - auto_volume_processor - INFO - \u2139\ufe0f All 1 videos were skipped (likely already have music).

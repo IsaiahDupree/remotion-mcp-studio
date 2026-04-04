@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "instanceId": "simple_video_enhancement",
+    "created": "2025-07-02T22:08:00.000Z"
+  },
+  "name": "Simple Video Enhancement - Quick Test",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "trigger",
+      "name": "▶️ Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "video_filename",
+              "name": "video_filename", 
+              "value": "v12044gd0000cu2t04nog65p7djql4g0.MP4",
+              "type": "string"
+            },
+            {
+              "id": "api_base",
+              "name": "api_base",
+              "value": "http://localhost:5003",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "config",
+      "name": "⚙️ Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.api_base }}/analyze/music-match/{{ $json.video_filename }}",
+        "options": {}
+      },
+      "id": "analyze",
+      "name": "🎵 Analyze",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.api_base }}/process/smart-video",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_filename\": \"{{ $json.video_filename }}\",\n  \"music_path\": \"{{ $json.music_recommendations.best_match.music_path }}\",\n  \"config\": {\n    \"music_volume\": 0.003162,\n    \"text_style\": \"modern\",\n    \"min_compatibility_score\": 0.6\n  }\n}",
+        "options": {}
+      },
+      "id": "process",
+      "name": "🎬 Process",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.api_base }}{{ $json.download_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "video_file"
+            }
+          }
+        }
+      },
+      "id": "download",
+      "name": "⬇️ Download",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "trigger": {
+      "main": [
+        [
+          {
+            "node": "config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "config": {
+      "main": [
+        [
+          {
+            "node": "analyze",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "analyze": {
+      "main": [
+        [
+          {
+            "node": "process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "process": {
+      "main": [
+        [
+          {
+            "node": "download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "id": "quick_test",
+      "name": "Quick Test"
+    }
+  ],
+  "triggerCount": 0,
+  "versionId": "1"
+}

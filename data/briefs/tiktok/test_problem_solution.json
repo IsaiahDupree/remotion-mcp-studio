@@ -1,0 +1,13 @@
+{
+  "id": "test_problem_solution",
+  "format": "problem_solution_v1",
+  "hook_text": "80% of deals die because you forgot to follow up",
+  "hook_style": "stat",
+  "hook_emoji": "📉",
+  "hook_subtext": "This is why your pipeline keeps leaking",
+  "body_points": ["PROBLEM: Leads go cold while you're stuck in your head", "SOLUTION: EverReach reminds you exactly when to reach back out"],
+  "cta_text": "Fix your follow-up — Download free",
+  "color_theme": "neon",
+  "duration_sec": 25,
+  "audio": {}
+}

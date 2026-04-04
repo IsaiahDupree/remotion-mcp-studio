@@ -1,0 +1,13 @@
+{
+  "id": "test_shorts_everreach",
+  "format": "shorts_v1",
+  "hook_text": "Your network is dying right now",
+  "hook_style": "glitch",
+  "hook_emoji": "💀",
+  "hook_subtext": "And you don't even know it",
+  "body_points": ["Every contact you ignore is a deal you'll never close", "EverReach tracks every relationship automatically"],
+  "cta_text": "Stop losing deals — Download EverReach",
+  "color_theme": "everreach",
+  "duration_sec": 20,
+  "audio": {}
+}

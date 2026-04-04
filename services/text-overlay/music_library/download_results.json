@@ -1,0 +1,36 @@
+{
+  "successful": [],
+  "failed": [
+    {
+      "title": "Chill Background Music",
+      "artist": "LoFi Producer",
+      "url": "https://soundcloud.com/example/chill-background-music",
+      "error": "Download failed"
+    },
+    {
+      "title": "Upbeat Tech Vibes",
+      "artist": "TechBeats",
+      "url": "https://soundcloud.com/example/upbeat-tech-vibes",
+      "error": "Download failed"
+    },
+    {
+      "title": "Acoustic Motivation",
+      "artist": "Indie Acoustic",
+      "url": "https://soundcloud.com/example/acoustic-motivation",
+      "error": "Download failed"
+    },
+    {
+      "title": "Corporate Success",
+      "artist": "Business Sounds",
+      "url": "https://soundcloud.com/example/corporate-success",
+      "error": "Download failed"
+    },
+    {
+      "title": "Ambient Focus",
+      "artist": "Ambient Works",
+      "url": "https://soundcloud.com/example/ambient-focus",
+      "error": "Download failed"
+    }
+  ],
+  "total": 5
+}

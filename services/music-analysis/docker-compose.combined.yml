@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  n8n-with-flask:
+    build:
+      context: .
+      dockerfile: Dockerfile.combined
+    container_name: n8n-with-flask
+    restart: unless-stopped
+    environment:
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binaryData
+      - N8N_PAYLOAD_SIZE_MAX=1024
+      # Add other n8n environment variables as needed
+    ports:
+      - "5678:5678"  # n8n
+      - "5001:5001"  # Flask API
+    volumes:
+      - ../soundcloud_music:/app/soundcloud_music:ro
+      - ../shared/videos:/app/shared/videos:ro
+      - ../shared/fonts:/app/shared/fonts:ro
+      - ../cache:/app/cache:rw
+      - n8n_data:/home/node/.n8n
+    networks:
+      - n8n-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  postgres:
+    image: postgres:14
+    container_name: n8n-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - n8n-network
+
+  flaskdrive:
+    build:
+      context: ../flaskdrive
+      dockerfile: Dockerfile
+    container_name: flaskdrive
+    restart: unless-stopped
+    ports:
+      - "4563:5000"  # Changed from 5000 to avoid conflicts
+    volumes:
+      - ../shared/videos:/app/videos:rw
+      - ../flaskdrive/client_secret.json:/app/client_secret.json:ro
+      - ../shared/.gcp:/app/.gcp:rw
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+    networks:
+      - n8n-network
+
+volumes:
+  n8n_data:
+  postgres_data:
+
+networks:
+  n8n-network:
+    name: n8n-network

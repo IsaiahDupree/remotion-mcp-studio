@@ -1,0 +1,55 @@
+FROM n8nio/n8n:1.91.1
+
+USER root
+
+# Install ffmpeg and other dependencies
+RUN apk add --no-cache ffmpeg python3 py3-pip libsndfile
+
+# Install additional npm packages
+WORKDIR /usr/local/lib/node_modules/n8n
+RUN npm install --no-save fluent-ffmpeg
+
+# Set up Python application
+WORKDIR /app
+
+# Copy Python requirements and install
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt gunicorn
+
+# Create necessary directories for the Flask app
+RUN mkdir -p /app/cache/temp_video
+RUN mkdir -p /app/output
+RUN mkdir -p /app/shared/fonts
+RUN mkdir -p /app/shared/videos
+RUN mkdir -p /app/soundcloud_music
+
+# Copy all Python application files
+COPY *.py .
+
+# Set environment variables for n8n
+ENV N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+ENV N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binaryData
+ENV N8N_PAYLOAD_SIZE_MAX=1024
+
+# Set environment variables for Flask
+ENV PYTHONPATH=/app
+ENV FLASK_APP=enhanced_flask_api.py
+ENV FLASK_ENV=development
+ENV PYTHONUNBUFFERED=1
+# OPENAI_API_KEY should be set via environment variable or docker-compose
+# ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+
+# Create startup script to run both services
+RUN echo '#!/bin/sh\n\
+echo "Starting Flask API..."\n\
+gunicorn --bind 0.0.0.0:5001 --workers 1 --timeout 300 enhanced_flask_api:app &\n\
+echo "Starting n8n..."\n\
+cd /usr/local/lib/node_modules/n8n\n\
+su -c "node /usr/local/lib/node_modules/n8n/bin/n8n.js start" node\n'\
+> /start.sh && chmod +x /start.sh
+
+# Expose ports for both services
+EXPOSE 5678 5001
+
+# Set the startup command
+CMD ["/start.sh"]

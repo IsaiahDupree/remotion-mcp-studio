@@ -1,0 +1,43 @@
+[run]
+# Coverage configuration
+source = .
+omit = 
+    */tests/*
+    */venv/*
+    */env/*
+    */.env/*
+    setup.py
+    conftest.py
+    */__pycache__/*
+    */migrations/*
+    */node_modules/*
+    */htmlcov/*
+    .pytest_cache/*
+    create_soundcloud_sample.py
+    test_*.py
+    start_flask_local.py
+
+[report]
+# Reporting configuration
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod
+
+ignore_errors = True
+show_missing = True
+skip_covered = False
+
+[html]
+directory = htmlcov
+title = Video Enhancement API Coverage Report
+
+[xml]
+output = coverage.xml

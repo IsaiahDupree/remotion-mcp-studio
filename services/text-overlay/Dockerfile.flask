@@ -1,0 +1,64 @@
+# Flask Video Enhancement API - Production Docker Image
+FROM python:3.9-slim
+
+# Install system dependencies for video processing
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libglib2.0-0 \
+    libgl1-mesa-glx \
+    libgomp1 \
+    libfontconfig1 \
+    libfreetype6 \
+    git \
+    wget \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Create necessary directories
+RUN mkdir -p \
+    /app/enhanced_videos \
+    /app/temp \
+    /app/music_library \
+    /app/shared \
+    /app/video_enhancer \
+    /app/utils \
+    /app/logs
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Install additional fonts for text overlay
+RUN mkdir -p /usr/share/fonts/truetype/custom && \
+    fc-cache -f -v
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_APP=flask_app.py
+ENV FLASK_ENV=production
+ENV FLASK_HOST=0.0.0.0
+ENV FLASK_PORT=5003
+
+# Expose Flask port
+EXPOSE 5003
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:5003/health || exit 1
+
+# Create non-root user for security
+RUN groupadd -r flaskuser && useradd -r -g flaskuser flaskuser
+RUN chown -R flaskuser:flaskuser /app
+USER flaskuser
+
+# Start Flask application
+CMD ["python", "flask_app.py"]

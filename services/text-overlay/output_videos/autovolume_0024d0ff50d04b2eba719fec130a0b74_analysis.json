@@ -1,0 +1,24 @@
+{
+  "video_path": "C:\\Users\\Isaia\\Documents\\WordsOnText\\output_videos\\autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4",
+  "filename": "autovolume_0024d0ff50d04b2eba719fec130a0b74.mp4",
+  "manual_music_check": {
+    "has_background_music": false,
+    "spectral_flatness": 0.0005734135047532618,
+    "zero_crossing_rate": 0.05385186360920227,
+    "rms_variation": 0.8754251783286336,
+    "confidence": 0.0
+  },
+  "text_overlay_check": {
+    "has_text_overlay": true,
+    "frames_with_text": 11,
+    "frames_sampled": 10,
+    "text_percentage": 110.00000000000001
+  },
+  "audio_analysis": {
+    "error": "has_background_music() got an unexpected keyword argument 'threshold'",
+    "has_background_music": false,
+    "has_speech": false,
+    "suggested_background_music": true
+  },
+  "has_transcript": false
+}

@@ -1,0 +1,5 @@
+timestamp,video_filename,video_path,output_path,transcript,text_overlay,music_url,music_filename,processing_time_seconds,success,error_message,video_duration,original_codec,output_codec
+2025-07-02T21:56:38.091936,v12044gd0000cu2t04nog65p7djql4g0.MP4,C:\Users\Isaia\Documents\Coding\N8N\shared\videos\v12044gd0000cu2t04nog65p7djql4g0.MP4,,,,,,0,False,'SmartVideoProcessor' object has no attribute 'music_enhancer',0,,
+2025-07-02T21:58:42.997276,v12044gd0000cu2t04nog65p7djql4g0.MP4,C:\Users\Isaia\Documents\Coding\N8N\shared\videos\v12044gd0000cu2t04nog65p7djql4g0.MP4,,,,,,0,False,'SmartVideoProcessor' object has no attribute 'text_styler',0,,
+2025-07-02T22:00:16.562501,v12044gd0000cu2t04nog65p7djql4g0.MP4,C:\Users\Isaia\Documents\Coding\N8N\shared\videos\v12044gd0000cu2t04nog65p7djql4g0.MP4,,,,,,0,False,'CompositeTextStyler' object has no attribute 'add_text_overlay',0,,
+2025-07-02T22:02:20.421368,v12044gd0000cu2t04nog65p7djql4g0.MP4,C:\Users\Isaia\Documents\Coding\N8N\shared\videos\v12044gd0000cu2t04nog65p7djql4g0.MP4,,,Amazing Content,,craetion - Summer Sky.aac,0,True,,0,,

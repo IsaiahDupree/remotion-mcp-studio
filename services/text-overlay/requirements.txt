@@ -1,0 +1,59 @@
+# Core AI and video processing
+faster-whisper>=0.10.0
+openai>=1.12.0
+opencv-python>=4.8.0.76
+ftfy>=6.1.3
+regex>=2023.10.3
+tqdm>=4.66.1
+torch>=2.1.0
+torchvision>=0.16.0
+clip @ git+https://github.com/openai/CLIP.git
+mediapipe>=0.10.8
+ultralytics>=8.0.0
+
+# Video and audio processing
+moviepy>=1.0.3
+ffmpeg-python>=0.2.0
+soundfile>=0.12.1
+librosa>=0.10.1
+matplotlib>=3.7.2
+whisper>=1.0
+
+# Data processing and utilities
+pandas>=2.0.3
+openpyxl>=3.1.0
+numpy>=1.24.3
+scipy>=1.11.0
+Pillow>=10.0.0
+python-dotenv>=1.0.0
+yt-dlp>=2023.7.6
+
+# Web framework
+Flask>=2.3.3
+Werkzeug>=2.3.7
+gunicorn>=21.2.0
+Flask-CORS>=4.0.0
+
+# Google APIs
+google-api-python-client>=2.80.0
+google-auth-oauthlib>=1.0.0
+
+# Other utilities
+pydantic>=2.5.0
+rich>=13.6.0
+PyYAML>=6.0.1
+python-slugify>=8.0.1
+PyQt5>=5.15.0
+requests>=2.31.0
+pytesseract>=0.3.10
+librosa==0.10.1
+scipy==1.11.2
+matplotlib==3.7.2
+whisper==1.0
+
+# Testing dependencies
+pytest==7.4.2
+pytest-cov==4.1.0
+pytest-timeout==2.1.0
+pytest-mock==3.11.1
+requests==2.31.0

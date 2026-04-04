@@ -1,0 +1,13 @@
+{
+  "id": "test_myth_reality",
+  "format": "myth_reality_v1",
+  "hook_text": "You don't need to post more content",
+  "hook_style": "question",
+  "hook_emoji": "🤔",
+  "hook_subtext": "Here's what actually grows your network",
+  "body_points": ["MYTH: More content = more connections", "REALITY: Consistent follow-up beats content volume every time"],
+  "cta_text": "Download EverReach — free on App Store",
+  "color_theme": "minimal",
+  "duration_sec": 25,
+  "audio": {}
+}

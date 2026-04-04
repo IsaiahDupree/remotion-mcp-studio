@@ -1,0 +1,162 @@
+version: '3.8'
+
+services:
+  # Enhanced n8n instance (cloned from original)
+  n8n-enhanced:
+    build:
+      context: ..
+      dockerfile: n8n.Dockerfile
+    restart: always
+    ports:
+      - "5679:5678"  # Different port to avoid conflicts
+    environment:
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+      - NODE_FUNCTION_ALLOW_BUILTIN=fs,path,os,child_process,util,crypto,stream,buffer,events,url,querystring,string_decoder,punycode,http,https,net,dgram,dns,tls,zlib,readline,assert,constants,timers,tty,domain,process
+      - NODE_OPTIONS=--max-old-space-size=8192
+      - EXECUTIONS_TIMEOUT=3600000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - N8N_LOG_LEVEL=debug
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5679/  # Updated webhook URL
+      - N8N_OAUTH2_CALLBACK_URL=http://localhost:5679/rest/oauth2-credential/callback  # Updated callback
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binaryData
+      - N8N_PAYLOAD_SIZE_MAX=1024
+      - N8N_EMAIL_MODE=none
+      - N8N_USER_MANAGEMENT_DISABLED=true
+      - N8N_AUTH_EXCLUDE_ENDPOINTS=executions:*
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_METRICS_ENABLED=false
+      - N8N_PAYLOAD_SIZE_MAX=10485760
+      - N8N_EXECUTION_PROCESS=main
+      - N8N_PUSH_BACKEND=websocket
+    volumes:
+      - ./data-enhanced:/home/node/.n8n  # Separate data directory
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/home/node/shared/videos"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/fonts:/home/node/shared/fonts"
+      - ../custom-nodes:/home/node/custom-nodes
+      - ../workflows:/home/node/workflows
+    depends_on:
+      - postgres-enhanced
+    networks:
+      - n8n-enhanced-network
+
+  # Enhanced FlaskDrive instance (cloned from original)
+  flaskdrive-enhanced:
+    build:
+      context: ../flaskdrive
+    restart: always
+    ports:
+      - "5005:5000"  # Changed to port 5005 to avoid conflicts
+    volumes:
+      - "C:/Users/Isaia/Documents/Coding/N8N/client_secret_993511578186-mfa25l7qf9m6is7bbq4n78j6afsedqc2.apps.googleusercontent.com.json:/srv/client_secret.json:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/srv/videos:rw"
+      - ./flaskdrive-enhanced-data:/srv/data:rw  # Separate data directory
+    environment:
+      - FLASK_ENV=production
+      - FLASK_SECRET_KEY=change_this_to_a_secure_random_string_enhanced
+      - MAX_CONTENT_LENGTH=10737418240
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+    networks:
+      - n8n-enhanced-network
+
+  # Enhanced PostgreSQL instance (cloned from original)
+  postgres-enhanced:
+    image: postgres:14
+    restart: always
+    ports:
+      - "5433:5432"  # Different port
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n
+      - POSTGRES_DB=n8n
+    volumes:
+      - postgres_enhanced_data:/var/lib/postgresql/data
+    networks:
+      - n8n-enhanced-network
+
+  # Simplified video-generator service
+  video-generator-enhanced:
+    image: python:3.9-slim
+    restart: always
+    ports:
+      - "5004:5001"  # Different port
+    volumes:
+      - /tmp:/tmp
+      - "//c/Users/Isaia/Documents/Coding/N8N/soundcloud_music:/srv/soundcloud_music:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/srv/videos:ro" 
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/fonts:/srv/fonts:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/cache:/srv/cache:rw"
+      - "//c/Users/Isaia/Documents/Coding/N8N/music_system/video-generator-app.py:/app/app.py:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/music_system/video-generator-requirements.txt:/app/requirements.txt:ro"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - n8n-enhanced-network
+    command: >
+      bash -c "apt-get update && 
+      apt-get install -y ffmpeg curl procps && 
+      pip install -r /app/requirements.txt && 
+      pip install gunicorn && 
+      mkdir -p /tmp/video-generator/output && 
+      cd /app && 
+      gunicorn --bind 0.0.0.0:5001 app:app"
+
+  # Enhanced Flask API with OpenAI video analysis and processing
+  enhanced-flask-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.minimal
+    restart: always
+    ports:
+      - "5003:5001"  # Flask API on port 5003
+    volumes:
+      - "//c/Users/Isaia/Documents/Coding/N8N/soundcloud_music:/app/soundcloud_music:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/app/shared/videos:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/fonts:/app/shared/fonts:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/cache:/srv/cache:rw"
+      - "/tmp:/tmp"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - n8n-enhanced-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # Fresh Flask API with proper music integration
+  fresh-flask-api:
+    build:
+      context: ..
+      dockerfile: Dockerfile.fresh-flask
+    restart: always
+    ports:
+      - "5025:5003"  # Fresh Flask API on port 5025
+    volumes:
+      - "//c/Users/Isaia/Documents/Coding/N8N/soundcloud_music:/app/soundcloud_music:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/app/shared/videos:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/fonts:/app/shared/fonts:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/cache:/app/cache:rw"
+      - "/tmp:/tmp"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - n8n-enhanced-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  postgres_enhanced_data:
+
+networks:
+  n8n-enhanced-network:
+    name: n8n-enhanced-network

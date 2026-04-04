@@ -1,0 +1,222 @@
+{
+  "name": "Video Enhancement Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "enhance-video",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "4c804b2b-a2c0-4b5e-9c8e-1234567890ab",
+      "name": "Webhook - Video Enhancement Request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "video-enhancement-webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "single",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "route-decision-node",
+      "name": "Route Decision",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://video-enhancer-api:5000/process/video",
+        "authentication": "none",
+        "requestMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={\n  \"video_path\": \"{{ $json.video_path }}\",\n  \"add_music\": {{ $json.add_music || true }},\n  \"position\": \"{{ $json.position || 'TOP' }}\",\n  \"custom_text\": \"{{ $json.custom_text || '' }}\",\n  \"speech_emphasis\": {{ $json.speech_emphasis || 0.6 }}\n}",
+        "options": {
+          "timeout": 300,
+          "retry": {
+            "enabled": true,
+            "maxTries": 2
+          }
+        }
+      },
+      "id": "single-video-processor",
+      "name": "Process Single Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://video-enhancer-api:5000/process/batch",
+        "authentication": "none",
+        "requestMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "={\n  \"video_paths\": {{ JSON.stringify($json.video_paths) }},\n  \"add_music\": {{ $json.add_music || true }},\n  \"position\": \"{{ $json.position || 'TOP' }}\",\n  \"speech_emphasis\": {{ $json.speech_emphasis || 0.6 }}\n}",
+        "options": {
+          "timeout": 600,
+          "retry": {
+            "enabled": true,
+            "maxTries": 1
+          }
+        }
+      },
+      "id": "batch-video-processor",
+      "name": "Process Batch Videos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": {{ $json.success }},\n  \"message\": \"Video processing {{ $json.success ? 'completed successfully' : 'failed' }}\",\n  \"output_path\": \"{{ $json.output_path }}\",\n  \"text_overlay\": \"{{ $json.text_overlay }}\",\n  \"processing_time\": {{ $json.processing_time_seconds }},\n  \"download_url\": \"{{ $json.download_url }}\",\n  \"timestamp\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "webhook-response",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://video-enhancer-api:5000/logs/recent",
+        "authentication": "none",
+        "requestMethod": "GET",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "id": "get-processing-log",
+      "name": "Get Processing Log",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Webhook - Video Enhancement Request": {
+      "main": [
+        [
+          {
+            "node": "Route Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Decision": {
+      "main": [
+        [
+          {
+            "node": "Process Single Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process Batch Videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Single Video": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Batch Videos": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Response": {
+      "main": [
+        [
+          {
+            "node": "Get Processing Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "video-enhancement-workflow",
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "video-processing",
+      "name": "Video Processing"
+    }
+  ]
+}

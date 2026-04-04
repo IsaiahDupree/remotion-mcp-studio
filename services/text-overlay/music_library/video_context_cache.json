@@ -1,0 +1,30 @@
+{
+  "9aa64d9b5f08d2a039205a206caa1470": {
+    "video_path": "C:\\Users\\Isaia\\Documents\\Coding\\N8N\\shared\\videos\\v12044gd0000cu2t04nog65p7djql4g0.MP4",
+    "transcript": "{'text': 'Audio file too large for transcription', 'segments': [], 'language': 'unknown', 'timestamp': '2025-07-02T21:46:01.181755', 'error': 'File size exceeds API limit'}",
+    "frame_analysis": "It looks like the video captures a scene at night in a parking lot with a focus on an approaching vehicle coming to a stop. \n\nOverlay text: \"Nighttime Parking Lot Adventures!\"",
+    "visual_mood": "calm",
+    "content_type": "entertainment",
+    "energy_level": "low",
+    "themes": [
+      "nighttime",
+      "parking lot",
+      "vehicles"
+    ],
+    "duration": 15.487
+  },
+  "67355ec0953cbdf039fc0ea7bf687775": {
+    "video_path": "C:\\Users\\Isaia\\Documents\\Coding\\N8N\\shared\\videos\\optimized_IMG_3271.MP4",
+    "transcript": "{'text': \"Is it possible to make a ton of money online? Yes, here's how. Do exactly what, it's gonna be the same stuff of love.\", 'segments': [{'start': 0.0, 'end': 3.0799999237060547, 'text': ' Is it possible to make a ton of money online?'}, {'start': 3.0799999237060547, 'end': 4.460000038146973, 'text': \" Yes, here's how.\"}, {'start': 6.0, 'end': 7.440000057220459, 'text': ' Do exactly what,'}, {'start': 8.520000457763672, 'end': 11.920000076293945, 'text': \" it's gonna be the same stuff of l",
+    "frame_analysis": "The person is speaking directly to the camera, possibly sharing a message or story. For social media, a catchy text overlay could be:\n\n\"Listen to This Surprise!\"",
+    "visual_mood": "energetic",
+    "content_type": "educational",
+    "energy_level": "medium",
+    "themes": [
+      "online income",
+      "financial advice",
+      "motivation"
+    ],
+    "duration": 12.676009
+  }
+}

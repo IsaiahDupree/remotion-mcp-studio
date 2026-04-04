@@ -1,0 +1,100 @@
+services:
+  n8n:
+    build:
+      context: ..
+      dockerfile: n8n.Dockerfile
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+      - NODE_FUNCTION_ALLOW_BUILTIN=fs,path,os,child_process,util,crypto,stream,buffer,events,url,querystring,string_decoder,punycode,http,https,net,dgram,dns,tls,zlib,readline,assert,constants,timers,tty,domain,process
+      - NODE_OPTIONS=--max-old-space-size=8192
+      - EXECUTIONS_TIMEOUT=3600000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - N8N_LOG_LEVEL=debug
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - N8N_OAUTH2_CALLBACK_URL=http://localhost:5678/rest/oauth2-credential/callback
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binaryData
+      - N8N_PAYLOAD_SIZE_MAX=1024
+      - N8N_EMAIL_MODE=none
+      - N8N_USER_MANAGEMENT_DISABLED=false
+      - N8N_DEFAULT_USER_EMAIL=isaiahdupree33@gmail.com
+      - N8N_DEFAULT_USER_PASSWORD=NewPassword123
+    volumes:
+      - ../data:/home/node/.n8n
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/home/node/shared/videos"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/fonts:/home/node/shared/fonts"
+      - ../custom-nodes:/home/node/custom-nodes
+      - ../workflows:/home/node/workflows
+    depends_on:
+      - postgres
+    networks:
+      - n8n-network
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n
+      - POSTGRES_DB=n8n
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - n8n-network
+
+  flaskdrive:
+    build:
+      context: ../flaskdrive
+    restart: always
+    ports:
+      - "4563:5000"  # Changed to 4563 to avoid conflict
+    volumes:
+      - "C:/Users/Isaia/Documents/Coding/N8N/client_secret_993511578186-mfa25l7qf9m6is7bbq4n78j6afsedqc2.apps.googleusercontent.com.json:/srv/client_secret.json:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/srv/videos:rw"
+      - ../flaskdrive/data:/srv/data:rw  # For storing token.pickle
+    environment:
+      - FLASK_ENV=production
+      - FLASK_SECRET_KEY=change_this_to_a_secure_random_string
+      - MAX_CONTENT_LENGTH=10737418240
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+    networks:
+      - n8n-network
+
+  direct-start-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.direct-start
+    restart: always
+    ports:
+      - "5001:5001"
+    volumes:
+      - /tmp:/tmp
+      - "//c/Users/Isaia/Documents/Coding/N8N/soundcloud_music:/srv/soundcloud_music:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/videos:/srv/videos:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/shared/fonts:/srv/fonts:ro"
+      - "//c/Users/Isaia/Documents/Coding/N8N/cache:/srv/cache:rw"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PYTHONUNBUFFERED=1
+    networks:
+      - n8n-network
+    # Healthcheck to ensure API is running properly
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  postgres_data:
+
+networks:
+  n8n-network:
+    driver: bridge
