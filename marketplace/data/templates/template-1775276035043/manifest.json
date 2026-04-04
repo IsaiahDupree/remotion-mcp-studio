@@ -1,0 +1,44 @@
+{
+  "id": "template-1775276035043",
+  "name": "Animation Presets Pack",
+  "version": "1.0.0",
+  "description": "12 production-ready animation presets: bounce, fade, glitch, kinetic typography, typewriter, zoom, stagger, and more.",
+  "longDescription": "",
+  "category": "effects",
+  "tags": [
+    "animations",
+    "presets",
+    "transitions",
+    "effects",
+    "motion"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "free",
+  "pricing": {
+    "price": 0,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [],
+    "mcpTools": [],
+    "entryPoint": "src/animations/index.ts",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.043Z",
+    "updatedAt": "2026-04-04T04:13:55.043Z"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "template-1775276035051",
+  "name": "BlankLogo Ad Templates",
+  "version": "1.0.0",
+  "description": "Before/after reveals, 3-step flows, comparison cards, receipt proofs, and UI mockups for SaaS marketing.",
+  "longDescription": "",
+  "category": "ads",
+  "tags": [
+    "saas",
+    "before-after",
+    "comparison",
+    "ui-proof",
+    "marketing"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 1499,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [
+      "BeforeAfterSplit",
+      "ThreeSteps",
+      "ComparisonCard",
+      "UIProof",
+      "ReceiptProof"
+    ],
+    "mcpTools": [],
+    "entryPoint": "src/compositions/blanklogo/index.tsx",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.051Z",
+    "updatedAt": "2026-04-04T04:13:55.051Z"
+  }
+}

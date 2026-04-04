@@ -83,7 +83,9 @@
     "mcp:test": "node --test tests/mcp-server.test.js",
     "services:start": "docker compose -f services/docker-compose.yml up -d",
     "services:stop": "docker compose -f services/docker-compose.yml down",
-    "services:status": "docker compose -f services/docker-compose.yml ps"
+    "services:status": "docker compose -f services/docker-compose.yml ps",
+    "marketplace": "node marketplace/server.js",
+    "marketplace:seed": "node marketplace/seed.js"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.443",

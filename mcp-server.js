@@ -37,6 +37,17 @@
  *   services_start               — start Docker services
  *   services_music_match         — AI music matching for videos
  *   services_text_overlay        — smart text overlay with AI
+ *
+ *   ── Template Marketplace ──
+ *   marketplace_browse           — browse templates by category
+ *   marketplace_search           — search templates by keyword
+ *   marketplace_details          — get full template details
+ *   marketplace_publish          — publish a template for sale
+ *   marketplace_buy              — purchase/download a template
+ *   marketplace_my_templates     — list seller's published templates
+ *   marketplace_my_purchases     — list buyer's purchased templates
+ *   marketplace_review           — submit a review for a template
+ *   marketplace_categories       — list all marketplace categories
  */
 
 'use strict';
@@ -49,6 +60,7 @@ const path = require('path');
 const crypto = require('crypto');
 const readline = require('readline');
 
+const marketplace = require('./marketplace/server');
 const REMOTION_DIR = path.resolve(__dirname);
 const OUTPUT_DIR = path.join(REMOTION_DIR, 'output');
 const BRIEFS_DIR = path.join(REMOTION_DIR, 'data', 'briefs', 'mcp');
@@ -1271,6 +1283,118 @@ const TOOL_DEFS = [
     description: 'List all available animation presets (bounce, fadeIn, glitch, kinetic, typewriter, etc.) for use in compositions.',
     inputSchema: { type: 'object', properties: {} },
   },
+  // ── Template Marketplace Tools ─────────────────────────────────────────────
+  {
+    name: 'marketplace_browse',
+    description: 'Browse the Remotion template marketplace. Filter by category and sort by popularity, newest, rating, or price. Returns template listings with names, prices, ratings, and download counts.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        category: {
+          type: 'string',
+          enum: ['social-video', 'youtube', 'ads', 'presentations', 'podcast', 'ecommerce', 'automation', 'effects', 'brand-kits'],
+          description: 'Filter by category',
+        },
+        sort: { type: 'string', enum: ['popular', 'newest', 'rating', 'price-low', 'price-high'], description: 'Sort order (default: popular)' },
+        limit: { type: 'number', description: 'Max results (default: 20)' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_search',
+    description: 'Search the template marketplace by keyword. Searches template names, descriptions, tags, and authors.',
+    inputSchema: {
+      type: 'object',
+      required: ['query'],
+      properties: {
+        query: { type: 'string', description: 'Search query (e.g. "tiktok countdown", "UGC ads", "podcast clip")' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_details',
+    description: 'Get full details for a specific template including description, pricing, reviews, technical requirements, and preview URLs.',
+    inputSchema: {
+      type: 'object',
+      required: ['templateId'],
+      properties: {
+        templateId: { type: 'string', description: 'Template ID to look up' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_publish',
+    description: 'Publish a Remotion template or automation to the marketplace for others to buy. Free templates are published immediately; paid templates require review. Include name, description, category, price, and technical details.',
+    inputSchema: {
+      type: 'object',
+      required: ['name', 'description', 'category'],
+      properties: {
+        name: { type: 'string', description: 'Template name' },
+        description: { type: 'string', description: 'Short description (max 200 chars)' },
+        longDescription: { type: 'string', description: 'Full description with markdown' },
+        category: { type: 'string', enum: ['social-video', 'youtube', 'ads', 'presentations', 'podcast', 'ecommerce', 'automation', 'effects', 'brand-kits'] },
+        tags: { type: 'array', items: { type: 'string' }, description: 'Searchable tags' },
+        price: { type: 'number', description: 'Price in cents (0 = free). e.g. 999 = $9.99' },
+        license: { type: 'string', enum: ['free', 'personal', 'commercial', 'extended', 'open-source'], description: 'License type' },
+        author: { type: 'string', description: 'Your display name' },
+        compositions: { type: 'array', items: { type: 'string' }, description: 'Remotion composition IDs included' },
+        mcpTools: { type: 'array', items: { type: 'string' }, description: 'MCP tool names included (for automations)' },
+        dependencies: { type: 'array', items: { type: 'string' }, description: 'npm dependencies required' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_buy',
+    description: 'Purchase or download a template from the marketplace. Free templates are added instantly. Paid templates initiate a Stripe checkout flow.',
+    inputSchema: {
+      type: 'object',
+      required: ['templateId'],
+      properties: {
+        templateId: { type: 'string', description: 'Template ID to purchase' },
+        buyerId: { type: 'string', description: 'Your user ID (default: "default")' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_my_templates',
+    description: 'List your published templates with sales stats, revenue, ratings, and download counts.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        sellerId: { type: 'string', description: 'Your seller ID (default: "default")' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_my_purchases',
+    description: 'List templates you have purchased or downloaded from the marketplace.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        buyerId: { type: 'string', description: 'Your user ID (default: "default")' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_review',
+    description: 'Submit a review for a purchased template. Rate 1-5 stars with an optional title and description.',
+    inputSchema: {
+      type: 'object',
+      required: ['templateId', 'rating'],
+      properties: {
+        templateId: { type: 'string', description: 'Template ID to review' },
+        rating: { type: 'number', description: 'Rating 1-5 stars' },
+        title: { type: 'string', description: 'Review title' },
+        body: { type: 'string', description: 'Review text' },
+        userName: { type: 'string', description: 'Your display name' },
+      },
+    },
+  },
+  {
+    name: 'marketplace_categories',
+    description: 'List all marketplace categories with descriptions. Use these when publishing or browsing templates.',
+    inputSchema: { type: 'object', properties: {} },
+  },
 ];
 
 async function handleTool(name, args) {
@@ -1895,6 +2019,85 @@ Return JSON with: { "hook": "opening hook text", "body_points": ["point 1", "poi
       } catch (err) {
         return { content: [{ type: 'text', text: JSON.stringify({ error: `Text overlay service error (is it running? Use services_start): ${err.message}` }) }], isError: true };
       }
+    }
+
+    // ── Template Marketplace Handlers ─────────────────────────────────────────
+    case 'marketplace_browse': {
+      const result = marketplace.browseListings({
+        category: args.category || null,
+        sort: args.sort || 'popular',
+        limit: args.limit || 20,
+        offset: args.offset || 0,
+      });
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+    }
+
+    case 'marketplace_search': {
+      if (!args.query) return { content: [{ type: 'text', text: JSON.stringify({ error: 'query is required' }) }], isError: true };
+      const result = marketplace.searchListings(args.query);
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+    }
+
+    case 'marketplace_details': {
+      if (!args.templateId) return { content: [{ type: 'text', text: JSON.stringify({ error: 'templateId is required' }) }], isError: true };
+      const listing = marketplace.getListingById(args.templateId);
+      if (!listing) return { content: [{ type: 'text', text: JSON.stringify({ error: 'Template not found' }) }], isError: true };
+      return { content: [{ type: 'text', text: JSON.stringify({
+        ...listing.manifest,
+        status: listing.status,
+        reviews: listing.reviews?.slice(0, 10) || [],
+        previewUrl: listing.previewUrl,
+        thumbnailUrl: listing.thumbnailUrl,
+        earnings: listing.manifest.authorId === (args.sellerId || 'default') ? listing.earnings : undefined,
+      }, null, 2) }] };
+    }
+
+    case 'marketplace_publish': {
+      const manifest = {
+        name: args.name,
+        description: args.description,
+        longDescription: args.longDescription,
+        category: args.category,
+        tags: args.tags || [],
+        author: args.author || 'Isaiah Dupree',
+        license: args.license || (args.price > 0 ? 'commercial' : 'free'),
+        pricing: { price: args.price || 0, currency: 'usd' },
+        technical: {
+          compositions: args.compositions || [],
+          mcpTools: args.mcpTools || [],
+          dependencies: args.dependencies || [],
+          remotionVersion: '>=4.0.0',
+          entryPoint: 'src/index.tsx',
+        },
+      };
+      const result = marketplace.publishTemplate(manifest, args.sellerId || 'default');
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], isError: !result.success };
+    }
+
+    case 'marketplace_buy': {
+      if (!args.templateId) return { content: [{ type: 'text', text: JSON.stringify({ error: 'templateId is required' }) }], isError: true };
+      const result = marketplace.initiatePurchase(args.templateId, args.buyerId || 'default');
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], isError: !result.success };
+    }
+
+    case 'marketplace_my_templates': {
+      const templates = marketplace.getSellerTemplates(args.sellerId || 'default');
+      return { content: [{ type: 'text', text: JSON.stringify({ templates }, null, 2) }] };
+    }
+
+    case 'marketplace_my_purchases': {
+      const purchases = marketplace.getUserPurchases(args.buyerId || 'default');
+      return { content: [{ type: 'text', text: JSON.stringify({ purchases }, null, 2) }] };
+    }
+
+    case 'marketplace_review': {
+      if (!args.templateId || !args.rating) return { content: [{ type: 'text', text: JSON.stringify({ error: 'templateId and rating are required' }) }], isError: true };
+      const result = marketplace.addReview(args.templateId, args.userId || 'default', args.userName || 'Anonymous', args.rating, args.title || '', args.body || '');
+      return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], isError: !result.success };
+    }
+
+    case 'marketplace_categories': {
+      return { content: [{ type: 'text', text: JSON.stringify(marketplace.CATEGORIES, null, 2) }] };
     }
 
     // ── Composition/Scene/Animation Browser ───────────────────────────────────

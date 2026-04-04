@@ -1,0 +1,49 @@
+{
+  "id": "template-1775276035070",
+  "name": "Smart Text Overlay Engine",
+  "version": "1.0.0",
+  "description": "AI-powered text overlay using Whisper transcription, YOLO detection, and CLIP understanding. Automatically places text avoiding faces and UI.",
+  "longDescription": "",
+  "category": "automation",
+  "tags": [
+    "text-overlay",
+    "ai",
+    "whisper",
+    "yolo",
+    "docker",
+    "video-processing"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 1999,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [],
+    "mcpTools": [
+      "services_text_overlay"
+    ],
+    "entryPoint": "src/index.tsx",
+    "envVars": {
+      "OPENAI_API_KEY": "OpenAI for text generation"
+    }
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.070Z",
+    "updatedAt": "2026-04-04T04:13:55.070Z"
+  }
+}

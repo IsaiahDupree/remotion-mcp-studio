@@ -1,0 +1,55 @@
+{
+  "id": "template-1775276035026",
+  "name": "AI Content Pipeline Automation",
+  "version": "1.0.0",
+  "description": "Full automation: research topics via Perplexity, generate scripts with Claude, create voiceovers with ElevenLabs, render and publish.",
+  "longDescription": "",
+  "category": "automation",
+  "tags": [
+    "ai",
+    "pipeline",
+    "automation",
+    "mcp",
+    "research",
+    "script",
+    "voiceover"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 4999,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [],
+    "mcpTools": [
+      "pipeline_research",
+      "pipeline_generate_script",
+      "pipeline_generate_voiceover",
+      "pipeline_full_run"
+    ],
+    "entryPoint": "src/index.tsx",
+    "envVars": {
+      "ANTHROPIC_API_KEY": "Claude API for script generation",
+      "PERPLEXITY_API_KEY": "Perplexity for topic research",
+      "ELEVENLABS_API_KEY": "ElevenLabs for voiceover"
+    }
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.026Z",
+    "updatedAt": "2026-04-04T04:13:55.026Z"
+  }
+}

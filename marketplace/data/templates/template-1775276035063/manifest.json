@@ -1,0 +1,49 @@
+{
+  "id": "template-1775276035063",
+  "name": "Music Analysis & Matching",
+  "version": "1.0.0",
+  "description": "Python microservice for AI-powered music-to-video matching. Analyzes tempo, mood, genre, and energy for perfect soundtrack selection.",
+  "longDescription": "",
+  "category": "automation",
+  "tags": [
+    "music",
+    "ai",
+    "matching",
+    "audio",
+    "mood",
+    "docker"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "free",
+  "pricing": {
+    "price": 0,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [],
+    "mcpTools": [
+      "services_music_match"
+    ],
+    "entryPoint": "src/index.tsx",
+    "envVars": {
+      "OPENAI_API_KEY": "OpenAI for music analysis"
+    }
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.063Z",
+    "updatedAt": "2026-04-04T04:13:55.063Z"
+  }
+}

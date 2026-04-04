@@ -1,0 +1,49 @@
+{
+  "id": "template-1775276034993",
+  "name": "TikTok Countdown Timer",
+  "version": "1.0.0",
+  "description": "Animated countdown video for TikTok with hook text, numbered items, and CTA. 5 built-in themes.",
+  "longDescription": "",
+  "category": "social-video",
+  "tags": [
+    "tiktok",
+    "countdown",
+    "shorts",
+    "vertical",
+    "hook"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "free",
+  "pricing": {
+    "price": 0,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [
+      "@remotion/captions",
+      "@remotion/media-utils"
+    ],
+    "compositions": [
+      "TikTokVideo"
+    ],
+    "mcpTools": [],
+    "entryPoint": "src/compositions/tiktok-pipeline/TikTokVideo.tsx",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:54.992Z",
+    "updatedAt": "2026-04-04T04:13:54.992Z"
+  }
+}

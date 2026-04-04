@@ -1,0 +1,733 @@
+[
+  {
+    "manifest": {
+      "id": "template-1775276034993",
+      "name": "TikTok Countdown Timer",
+      "version": "1.0.0",
+      "description": "Animated countdown video for TikTok with hook text, numbered items, and CTA. 5 built-in themes.",
+      "longDescription": "",
+      "category": "social-video",
+      "tags": [
+        "tiktok",
+        "countdown",
+        "shorts",
+        "vertical",
+        "hook"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "free",
+      "pricing": {
+        "price": 0,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [
+          "@remotion/captions",
+          "@remotion/media-utils"
+        ],
+        "compositions": [
+          "TikTokVideo"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/compositions/tiktok-pipeline/TikTokVideo.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 1,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:54.992Z",
+        "updatedAt": "2026-04-04T04:13:54.992Z"
+      }
+    },
+    "status": "published",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276034993",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276034993/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276034994",
+      "name": "UGC Product Demo Pack",
+      "version": "1.0.0",
+      "description": "Complete UGC ad pack: before/after, feature list, testimonial, problem/solution, stat counter, and urgency formats.",
+      "longDescription": "",
+      "category": "ads",
+      "tags": [
+        "ugc",
+        "product",
+        "ads",
+        "meta",
+        "instagram",
+        "tiktok"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 1999,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [
+          "UGCBeforeAfter",
+          "UGCFeatureList",
+          "UGCTestimonial",
+          "UGCProblemSolution",
+          "UGCStatCounter",
+          "UGCUrgency"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/compositions/ugc/index.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:54.994Z",
+        "updatedAt": "2026-04-04T04:13:54.994Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276034994",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276034994/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035002",
+      "name": "EverReach Ad Suite",
+      "version": "1.0.0",
+      "description": "Full app marketing suite: pain point ads, listicle, comparison, stat cards, App Store mockups, and reels.",
+      "longDescription": "",
+      "category": "ads",
+      "tags": [
+        "app",
+        "marketing",
+        "ads",
+        "app-store",
+        "screenshots",
+        "meta"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 2999,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [
+          "EverReachAd",
+          "PainPointAd",
+          "ListicleAd",
+          "ComparisonAd",
+          "EverReachAppStoreMockup",
+          "EverReachReel"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/compositions/everreach/index.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.002Z",
+        "updatedAt": "2026-04-04T04:13:55.002Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035002",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035002/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035010",
+      "name": "YouTube Explainer Kit",
+      "version": "1.0.0",
+      "description": "Professional explainer videos with SEO documentary style, chapter cards, and animated topics. 16:9 format.",
+      "longDescription": "",
+      "category": "youtube",
+      "tags": [
+        "youtube",
+        "explainer",
+        "documentary",
+        "education",
+        "tutorial"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 1499,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [
+          "SEODocumentary",
+          "SEODocumentaryV2",
+          "FullVideoDemo"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/compositions/SEODocumentary.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.010Z",
+        "updatedAt": "2026-04-04T04:13:55.010Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035010",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035010/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035018",
+      "name": "Podcast Clip Generator",
+      "version": "1.0.0",
+      "description": "Turn podcast episodes into shareable clips with waveform visualization, captions, and branding.",
+      "longDescription": "",
+      "category": "podcast",
+      "tags": [
+        "podcast",
+        "clip",
+        "waveform",
+        "audiogram",
+        "captions"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 999,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [
+          "PodcastClip"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/compositions/PodcastClip.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.018Z",
+        "updatedAt": "2026-04-04T04:13:55.018Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035018",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035018/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035026",
+      "name": "AI Content Pipeline Automation",
+      "version": "1.0.0",
+      "description": "Full automation: research topics via Perplexity, generate scripts with Claude, create voiceovers with ElevenLabs, render and publish.",
+      "longDescription": "",
+      "category": "automation",
+      "tags": [
+        "ai",
+        "pipeline",
+        "automation",
+        "mcp",
+        "research",
+        "script",
+        "voiceover"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 4999,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [],
+        "mcpTools": [
+          "pipeline_research",
+          "pipeline_generate_script",
+          "pipeline_generate_voiceover",
+          "pipeline_full_run"
+        ],
+        "entryPoint": "src/index.tsx",
+        "envVars": {
+          "ANTHROPIC_API_KEY": "Claude API for script generation",
+          "PERPLEXITY_API_KEY": "Perplexity for topic research",
+          "ELEVENLABS_API_KEY": "ElevenLabs for voiceover"
+        }
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.026Z",
+        "updatedAt": "2026-04-04T04:13:55.026Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035026",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035026/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035036",
+      "name": "Caption Styles Collection",
+      "version": "1.0.0",
+      "description": "15+ TikTok and UGC caption styles: pop-in, karaoke-box, word-slam, neon, ig-story, and more.",
+      "longDescription": "",
+      "category": "effects",
+      "tags": [
+        "captions",
+        "subtitles",
+        "tiktok",
+        "ugc",
+        "styles",
+        "typography"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "free",
+      "pricing": {
+        "price": 0,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [
+          "CaptionStylesBenchmark"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/components/TikTokCaptions.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.036Z",
+        "updatedAt": "2026-04-04T04:13:55.036Z"
+      }
+    },
+    "status": "published",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035036",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035036/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035043",
+      "name": "Animation Presets Pack",
+      "version": "1.0.0",
+      "description": "12 production-ready animation presets: bounce, fade, glitch, kinetic typography, typewriter, zoom, stagger, and more.",
+      "longDescription": "",
+      "category": "effects",
+      "tags": [
+        "animations",
+        "presets",
+        "transitions",
+        "effects",
+        "motion"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "free",
+      "pricing": {
+        "price": 0,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [],
+        "mcpTools": [],
+        "entryPoint": "src/animations/index.ts",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.043Z",
+        "updatedAt": "2026-04-04T04:13:55.043Z"
+      }
+    },
+    "status": "published",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035043",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035043/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035051",
+      "name": "BlankLogo Ad Templates",
+      "version": "1.0.0",
+      "description": "Before/after reveals, 3-step flows, comparison cards, receipt proofs, and UI mockups for SaaS marketing.",
+      "longDescription": "",
+      "category": "ads",
+      "tags": [
+        "saas",
+        "before-after",
+        "comparison",
+        "ui-proof",
+        "marketing"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 1499,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [
+          "BeforeAfterSplit",
+          "ThreeSteps",
+          "ComparisonCard",
+          "UIProof",
+          "ReceiptProof"
+        ],
+        "mcpTools": [],
+        "entryPoint": "src/compositions/blanklogo/index.tsx",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.051Z",
+        "updatedAt": "2026-04-04T04:13:55.051Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035051",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035051/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035057",
+      "name": "Multi-Platform Format Pack",
+      "version": "1.0.0",
+      "description": "30+ platform-specific video formats for YouTube, TikTok, Instagram, LinkedIn, Twitter, Facebook, and Threads.",
+      "longDescription": "",
+      "category": "social-video",
+      "tags": [
+        "multi-platform",
+        "formats",
+        "youtube",
+        "tiktok",
+        "instagram",
+        "linkedin",
+        "twitter"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 2499,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [],
+        "mcpTools": [],
+        "entryPoint": "formats/index.ts",
+        "envVars": {}
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.057Z",
+        "updatedAt": "2026-04-04T04:13:55.057Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035057",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035057/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035063",
+      "name": "Music Analysis & Matching",
+      "version": "1.0.0",
+      "description": "Python microservice for AI-powered music-to-video matching. Analyzes tempo, mood, genre, and energy for perfect soundtrack selection.",
+      "longDescription": "",
+      "category": "automation",
+      "tags": [
+        "music",
+        "ai",
+        "matching",
+        "audio",
+        "mood",
+        "docker"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "free",
+      "pricing": {
+        "price": 0,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [],
+        "mcpTools": [
+          "services_music_match"
+        ],
+        "entryPoint": "src/index.tsx",
+        "envVars": {
+          "OPENAI_API_KEY": "OpenAI for music analysis"
+        }
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.063Z",
+        "updatedAt": "2026-04-04T04:13:55.063Z"
+      }
+    },
+    "status": "published",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035063",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035063/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  },
+  {
+    "manifest": {
+      "id": "template-1775276035070",
+      "name": "Smart Text Overlay Engine",
+      "version": "1.0.0",
+      "description": "AI-powered text overlay using Whisper transcription, YOLO detection, and CLIP understanding. Automatically places text avoiding faces and UI.",
+      "longDescription": "",
+      "category": "automation",
+      "tags": [
+        "text-overlay",
+        "ai",
+        "whisper",
+        "yolo",
+        "docker",
+        "video-processing"
+      ],
+      "author": "Isaiah Dupree",
+      "authorId": "isaiah-dupree",
+      "license": "commercial",
+      "pricing": {
+        "price": 1999,
+        "currency": "usd",
+        "stripeProductId": null,
+        "stripePriceId": null
+      },
+      "technical": {
+        "remotionVersion": ">=4.0.0",
+        "dependencies": [],
+        "compositions": [],
+        "mcpTools": [
+          "services_text_overlay"
+        ],
+        "entryPoint": "src/index.tsx",
+        "envVars": {
+          "OPENAI_API_KEY": "OpenAI for text generation"
+        }
+      },
+      "assets": {
+        "thumbnail": "thumbnail.png",
+        "preview": null,
+        "screenshots": []
+      },
+      "stats": {
+        "downloads": 0,
+        "rating": 0,
+        "reviews": 0,
+        "publishedAt": "2026-04-04T04:13:55.070Z",
+        "updatedAt": "2026-04-04T04:13:55.070Z"
+      }
+    },
+    "status": "pending_review",
+    "storagePath": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\marketplace\\data\\templates\\template-1775276035070",
+    "thumbnailUrl": "/api/marketplace/assets/template-1775276035070/thumbnail.png",
+    "previewUrl": null,
+    "reviews": [],
+    "earnings": {
+      "totalRevenue": 0,
+      "totalSales": 0,
+      "platformFee": 0.15
+    }
+  }
+]

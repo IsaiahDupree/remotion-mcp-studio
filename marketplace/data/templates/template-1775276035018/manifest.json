@@ -1,0 +1,46 @@
+{
+  "id": "template-1775276035018",
+  "name": "Podcast Clip Generator",
+  "version": "1.0.0",
+  "description": "Turn podcast episodes into shareable clips with waveform visualization, captions, and branding.",
+  "longDescription": "",
+  "category": "podcast",
+  "tags": [
+    "podcast",
+    "clip",
+    "waveform",
+    "audiogram",
+    "captions"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 999,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [
+      "PodcastClip"
+    ],
+    "mcpTools": [],
+    "entryPoint": "src/compositions/PodcastClip.tsx",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.018Z",
+    "updatedAt": "2026-04-04T04:13:55.018Z"
+  }
+}

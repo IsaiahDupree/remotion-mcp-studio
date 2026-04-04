@@ -1,0 +1,52 @@
+{
+  "id": "template-1775276035002",
+  "name": "EverReach Ad Suite",
+  "version": "1.0.0",
+  "description": "Full app marketing suite: pain point ads, listicle, comparison, stat cards, App Store mockups, and reels.",
+  "longDescription": "",
+  "category": "ads",
+  "tags": [
+    "app",
+    "marketing",
+    "ads",
+    "app-store",
+    "screenshots",
+    "meta"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 2999,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [
+      "EverReachAd",
+      "PainPointAd",
+      "ListicleAd",
+      "ComparisonAd",
+      "EverReachAppStoreMockup",
+      "EverReachReel"
+    ],
+    "mcpTools": [],
+    "entryPoint": "src/compositions/everreach/index.tsx",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.002Z",
+    "updatedAt": "2026-04-04T04:13:55.002Z"
+  }
+}

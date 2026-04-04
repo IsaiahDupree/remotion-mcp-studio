@@ -1,0 +1,52 @@
+{
+  "id": "template-1775276034994",
+  "name": "UGC Product Demo Pack",
+  "version": "1.0.0",
+  "description": "Complete UGC ad pack: before/after, feature list, testimonial, problem/solution, stat counter, and urgency formats.",
+  "longDescription": "",
+  "category": "ads",
+  "tags": [
+    "ugc",
+    "product",
+    "ads",
+    "meta",
+    "instagram",
+    "tiktok"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 1999,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [
+      "UGCBeforeAfter",
+      "UGCFeatureList",
+      "UGCTestimonial",
+      "UGCProblemSolution",
+      "UGCStatCounter",
+      "UGCUrgency"
+    ],
+    "mcpTools": [],
+    "entryPoint": "src/compositions/ugc/index.tsx",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:54.994Z",
+    "updatedAt": "2026-04-04T04:13:54.994Z"
+  }
+}

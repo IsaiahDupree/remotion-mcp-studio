@@ -1,0 +1,47 @@
+{
+  "id": "template-1775276035036",
+  "name": "Caption Styles Collection",
+  "version": "1.0.0",
+  "description": "15+ TikTok and UGC caption styles: pop-in, karaoke-box, word-slam, neon, ig-story, and more.",
+  "longDescription": "",
+  "category": "effects",
+  "tags": [
+    "captions",
+    "subtitles",
+    "tiktok",
+    "ugc",
+    "styles",
+    "typography"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "free",
+  "pricing": {
+    "price": 0,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [
+      "CaptionStylesBenchmark"
+    ],
+    "mcpTools": [],
+    "entryPoint": "src/components/TikTokCaptions.tsx",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.036Z",
+    "updatedAt": "2026-04-04T04:13:55.036Z"
+  }
+}

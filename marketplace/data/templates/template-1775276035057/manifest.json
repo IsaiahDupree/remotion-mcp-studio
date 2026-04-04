@@ -1,0 +1,46 @@
+{
+  "id": "template-1775276035057",
+  "name": "Multi-Platform Format Pack",
+  "version": "1.0.0",
+  "description": "30+ platform-specific video formats for YouTube, TikTok, Instagram, LinkedIn, Twitter, Facebook, and Threads.",
+  "longDescription": "",
+  "category": "social-video",
+  "tags": [
+    "multi-platform",
+    "formats",
+    "youtube",
+    "tiktok",
+    "instagram",
+    "linkedin",
+    "twitter"
+  ],
+  "author": "Isaiah Dupree",
+  "authorId": "isaiah-dupree",
+  "license": "commercial",
+  "pricing": {
+    "price": 2499,
+    "currency": "usd",
+    "stripeProductId": null,
+    "stripePriceId": null
+  },
+  "technical": {
+    "remotionVersion": ">=4.0.0",
+    "dependencies": [],
+    "compositions": [],
+    "mcpTools": [],
+    "entryPoint": "formats/index.ts",
+    "envVars": {}
+  },
+  "assets": {
+    "thumbnail": "thumbnail.png",
+    "preview": null,
+    "screenshots": []
+  },
+  "stats": {
+    "downloads": 0,
+    "rating": 0,
+    "reviews": 0,
+    "publishedAt": "2026-04-04T04:13:55.057Z",
+    "updatedAt": "2026-04-04T04:13:55.057Z"
+  }
+}
