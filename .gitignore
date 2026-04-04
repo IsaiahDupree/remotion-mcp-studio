@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.local
+output/
+dist/
+.next/
+*.mp4
+*.mp3
+*.wav
+*.mov
+.DS_Store
+Thumbs.db
+*.log
+.cache/
+.remotion/
+package-lock.json
