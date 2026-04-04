@@ -3251,6 +3251,29 @@ export const RemotionRoot: React.FC = () => {
           ),
         })}
       />
+      {/* ── Avatar With Captions (HeyGen pipeline) ── */}
+      <Composition
+        id="AvatarWithCaptions"
+        lazyComponent={() => import('./compositions/marketplace-templates/AvatarWithCaptions').then(m => ({ default: m.AvatarWithCaptions }))}
+        durationInFrames={27 * 30}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          avatarVideoSrc: 'avatar-transparent.webm',
+          backgroundType: 'color' as const,
+          backgroundValue: '#0a0a1a',
+          title: 'Remotion MCP Studio',
+          subtitle: 'The Ultimate Video Platform',
+          captions: [],
+          captionStyle: 'tiktok' as const,
+          accentColor: '#7c3aed',
+          avatarScale: 1.0,
+          avatarPosition: 'center' as const,
+          showGradientOverlay: true,
+          durationInSeconds: 27,
+        }}
+      />
     </>
   );
 };

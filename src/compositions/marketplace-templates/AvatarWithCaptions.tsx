@@ -16,6 +16,7 @@
 import React, { useMemo } from 'react';
 import {
   AbsoluteFill,
+  Audio,
   OffthreadVideo,
   Img,
   useCurrentFrame,
@@ -74,6 +75,10 @@ export const avatarWithCaptionsSchema = z.object({
     .default('center')
     .describe('Avatar position in frame'),
   showGradientOverlay: z.boolean().default(true).describe('Dark gradient at top/bottom for readability'),
+  audioSrc: z
+    .string()
+    .default('')
+    .describe('Path to audio file (extracted from HeyGen video)'),
   durationInSeconds: z.number().default(15).describe('Video duration in seconds'),
 });
 
@@ -323,6 +328,11 @@ export const AvatarWithCaptions: React.FC<AvatarWithCaptionsProps> = (props) => 
             }}
           />
         </AbsoluteFill>
+      )}
+
+      {/* Audio Track (extracted from HeyGen video) */}
+      {props.audioSrc && (
+        <Audio src={staticFile(props.audioSrc)} volume={1} />
       )}
 
       {/* Avatar Layer (transparent WebM) */}
