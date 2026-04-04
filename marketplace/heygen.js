@@ -109,34 +109,27 @@ function downloadFile(url, outputPath, _redirects) {
 async function generateAvatar(opts) {
   if (!opts || !opts.text) throw new Error('text is required');
 
-  const avatarId = opts.avatarId || 'Angela-inTshirt-20220820';
-  const voiceId = opts.voiceId || 'en-US-JennyNeural';
+  const avatarId = opts.avatarId || 'd9af08b6f80349aaa56096443f91d19e';
+  const voiceId = opts.voiceId || 'afae078e137147d7990bcd2a781ed562';
   const style = opts.style || 'normal';
-  const dimension = opts.dimension || { width: 1080, height: 1920 };
+  const width = opts.width || 1080;
+  const height = opts.height || 1920;
 
-  // Try transparent WebM endpoint first
+  // Try transparent WebM endpoint first (v1 — flat params, not video_inputs)
   try {
     const webmBody = {
-      video_inputs: [{
-        character: {
-          type: 'avatar',
-          avatar_id: avatarId,
-          avatar_style: style,
-        },
-        voice: {
-          type: 'text',
-          input_text: opts.text,
-          voice_id: voiceId,
-        },
-      }],
-      dimension,
-      aspect_ratio: null,
+      avatar_pose_id: avatarId,
+      avatar_style: style,
+      input_text: opts.text,
+      voice_id: voiceId,
+      dimension: { width, height },
     };
 
     const res = await apiRequest('POST', '/v1/video.webm', webmBody);
     if (res.data && res.data.video_id) {
-      return { videoId: res.data.video_id, status: 'pending' };
+      return { videoId: res.data.video_id, status: 'pending', format: 'webm' };
     }
+    // If error code indicates avatar doesn't support webm, fall through
   } catch {
     // WebM endpoint failed — fall through to v2
   }
@@ -156,14 +149,18 @@ async function generateAvatar(opts) {
       },
       background: {
         type: 'color',
-        value: '#00FF00',
+        value: '#00b140',
       },
     }],
-    dimension,
+    dimension: { width, height },
+    caption: true,
   };
 
   const res = await apiRequest('POST', '/v2/video/generate', v2Body);
-  if (res.error) throw new Error(res.error.message || JSON.stringify(res.error));
+  if (res.error) {
+    const msg = typeof res.error === 'string' ? res.error : (res.message || JSON.stringify(res.error));
+    throw new Error(msg);
+  }
   if (!res.data || !res.data.video_id) {
     throw new Error('HeyGen API did not return a video_id: ' + JSON.stringify(res));
   }
@@ -201,7 +198,8 @@ function pollVideoStatus(videoId) {
           }
 
           if (status === 'failed' || status === 'error') {
-            return reject(new Error('HeyGen video generation failed: ' + (d.error || status)));
+            const errMsg = typeof d.error === 'string' ? d.error : JSON.stringify(d.error || d.msg || status);
+            return reject(new Error('HeyGen video generation failed: ' + errMsg));
           }
 
           if (Date.now() - start > TIMEOUT) {
@@ -262,9 +260,11 @@ async function generateAndDownload(opts) {
  * @returns {Promise<object>}
  */
 async function listAvatars() {
-  const res = await apiRequest('GET', '/v1/avatar.list', null);
-  if (res.error) throw new Error(res.error.message || JSON.stringify(res.error));
-  return res.data || res;
+  const res = await apiRequest('GET', '/v2/avatars', null);
+  if (res.error) throw new Error(typeof res.error === 'string' ? res.error : JSON.stringify(res.error));
+  // v2 returns { data: { avatars: [...] } } or { avatars: [...] }
+  const avatars = res.data?.avatars || res.avatars || [];
+  return { avatars };
 }
 
 module.exports = {
