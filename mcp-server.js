@@ -61,6 +61,7 @@ const crypto = require('crypto');
 const readline = require('readline');
 
 const marketplace = require('./marketplace/server');
+const heygen = require('./marketplace/heygen');
 const REMOTION_DIR = path.resolve(__dirname);
 const OUTPUT_DIR = path.join(REMOTION_DIR, 'output');
 const BRIEFS_DIR = path.join(REMOTION_DIR, 'data', 'briefs', 'mcp');
@@ -1395,6 +1396,38 @@ const TOOL_DEFS = [
     description: 'List all marketplace categories with descriptions. Use these when publishing or browsing templates.',
     inputSchema: { type: 'object', properties: {} },
   },
+  {
+    name: 'heygen_generate_avatar',
+    description: 'Generate an AI avatar video via HeyGen API. The avatar speaks the given text. Returns a videoId that can be polled with heygen_video_status. Requires HEYGEN_API_KEY env var.',
+    inputSchema: {
+      type: 'object',
+      required: ['text'],
+      properties: {
+        text: { type: 'string', description: 'Script text for the avatar to speak' },
+        avatarId: { type: 'string', description: 'HeyGen avatar ID (default: Angela-inTshirt-20220820). Use heygen_list_avatars to see options.' },
+        voiceId: { type: 'string', description: 'HeyGen voice ID (default: en-US-JennyNeural)' },
+        style: { type: 'string', enum: ['normal', 'closeUp'], description: 'Avatar framing style (default: normal)' },
+        width: { type: 'number', description: 'Video width in px (default: 1080)' },
+        height: { type: 'number', description: 'Video height in px (default: 1920)' },
+      },
+    },
+  },
+  {
+    name: 'heygen_list_avatars',
+    description: 'List all available HeyGen avatars with their IDs and preview images. Requires HEYGEN_API_KEY env var.',
+    inputSchema: { type: 'object', properties: {} },
+  },
+  {
+    name: 'heygen_video_status',
+    description: 'Check the status of a HeyGen avatar video generation. Returns status, video URL (when complete), caption URL, and duration.',
+    inputSchema: {
+      type: 'object',
+      required: ['videoId'],
+      properties: {
+        videoId: { type: 'string', description: 'The video ID returned by heygen_generate_avatar' },
+      },
+    },
+  },
 ];
 
 async function handleTool(name, args) {
@@ -2148,6 +2181,42 @@ Return JSON with: { "hook": "opening hook text", "body_points": ["point 1", "poi
         }
       }
       return { content: [{ type: 'text', text: JSON.stringify({ total: anims.length, animations: anims }, null, 2) }] };
+    }
+
+    case 'heygen_generate_avatar': {
+      if (!args.text) return { content: [{ type: 'text', text: JSON.stringify({ error: 'text is required' }) }], isError: true };
+      try {
+        const dimension = (args.width && args.height) ? { width: args.width, height: args.height } : undefined;
+        const result = await heygen.generateAvatar({
+          text: args.text,
+          avatarId: args.avatarId,
+          voiceId: args.voiceId,
+          style: args.style,
+          dimension,
+        });
+        return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
+    }
+
+    case 'heygen_list_avatars': {
+      try {
+        const result = await heygen.listAvatars();
+        return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
+    }
+
+    case 'heygen_video_status': {
+      if (!args.videoId) return { content: [{ type: 'text', text: JSON.stringify({ error: 'videoId is required' }) }], isError: true };
+      try {
+        const result = await heygen.pollVideoStatus(args.videoId);
+        return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
     }
 
     default:
