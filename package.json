@@ -85,7 +85,9 @@
     "services:stop": "docker compose -f services/docker-compose.yml down",
     "services:status": "docker compose -f services/docker-compose.yml ps",
     "marketplace": "node marketplace/server.js",
-    "marketplace:seed": "node marketplace/seed.js"
+    "marketplace:seed": "node marketplace/seed.js",
+    "documentary": "bash services/documentary-pipeline/produce_documentary.sh",
+    "documentary:status": "node -e \"const s=require('child_process').spawnSync;const r=s('python',['--version'],{stdio:'pipe'});console.log('Python:',r.stdout?.toString().trim()||'not found')\""
   },
   "dependencies": {
     "@remotion/bundler": "4.0.443",

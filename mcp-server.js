@@ -38,6 +38,14 @@
  *   services_music_match         — AI music matching for videos
  *   services_text_overlay        — smart text overlay with AI
  *
+ *   ── Documentary Pipeline ──
+ *   documentary_produce          — full pipeline: topic → finished documentary
+ *   documentary_research         — research a topic for documentary content
+ *   documentary_generate_script  — generate chapter structure + narration
+ *   documentary_voiceover        — generate voiceovers for all chapters
+ *   documentary_render_props     — build Remotion render config from assets
+ *   documentary_status           — check pipeline status and assets
+ *
  *   ── Template Marketplace ──
  *   marketplace_browse           — browse templates by category
  *   marketplace_search           — search templates by keyword
@@ -1396,6 +1404,82 @@ const TOOL_DEFS = [
     description: 'List all marketplace categories with descriptions. Use these when publishing or browsing templates.',
     inputSchema: { type: 'object', properties: {} },
   },
+  // ── Documentary Pipeline Tools ──────────────────────────────────────────────
+  {
+    name: 'documentary_produce',
+    description: 'Run the full documentary production pipeline: topic → research → script → voiceover → transcription → scene timing → images → render props → Remotion render. Requires Python + API keys. Runs produce_documentary.sh.',
+    inputSchema: {
+      type: 'object',
+      required: ['topic'],
+      properties: {
+        topic: { type: 'string', description: 'Documentary topic (e.g., "The History of AI: From Turing to GPT")' },
+        chapters: { type: 'number', description: 'Number of chapters (default: 10)' },
+        narratorStyle: { type: 'string', enum: ['documentary', 'educational', 'dramatic'], description: 'Narrator voice style (default: documentary)' },
+        step: { type: 'number', description: 'Resume from specific step (1-10, default: 1)' },
+        dryRun: { type: 'boolean', description: 'Show what would run without executing' },
+      },
+    },
+  },
+  {
+    name: 'documentary_research',
+    description: 'Research a topic for documentary content using Perplexity (web), Reddit (community), and Claude (synthesis). Outputs structured chapter outline with facts, stats, and quotes.',
+    inputSchema: {
+      type: 'object',
+      required: ['topic'],
+      properties: {
+        topic: { type: 'string', description: 'Topic to research deeply' },
+        depth: { type: 'string', enum: ['quick', 'standard', 'deep'], description: 'Research depth (default: standard)' },
+      },
+    },
+  },
+  {
+    name: 'documentary_generate_script',
+    description: 'Generate a multi-chapter documentary script with narration, scene descriptions, and metadata. Uses Claude to create the narrative structure.',
+    inputSchema: {
+      type: 'object',
+      required: ['topic'],
+      properties: {
+        topic: { type: 'string', description: 'Documentary topic' },
+        chapters: { type: 'number', description: 'Number of chapters (default: 10)' },
+        narratorStyle: { type: 'string', enum: ['documentary', 'educational', 'dramatic'], description: 'Style' },
+        researchDir: { type: 'string', description: 'Path to research output directory (optional)' },
+      },
+    },
+  },
+  {
+    name: 'documentary_voiceover',
+    description: 'Generate high-quality voiceover audio for all documentary chapters using ElevenLabs with paragraph-level chunking. Includes voice QA gate.',
+    inputSchema: {
+      type: 'object',
+      required: ['configPath'],
+      properties: {
+        configPath: { type: 'string', description: 'Path to generate_config.json' },
+        voiceId: { type: 'string', description: 'ElevenLabs voice ID (default: Isaiah clone)' },
+        qaCheck: { type: 'boolean', description: 'Run voice quality gate after generation (default: true)' },
+      },
+    },
+  },
+  {
+    name: 'documentary_render_props',
+    description: 'Build the Remotion render_props_v3.json from all generated assets (audio, transcripts, scenes, images). This JSON feeds directly into SEODocumentaryV2 composition.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        configPath: { type: 'string', description: 'Path to generate_config.json' },
+        outputPath: { type: 'string', description: 'Output path for render props JSON' },
+      },
+    },
+  },
+  {
+    name: 'documentary_status',
+    description: 'Check the status of a documentary production pipeline — which steps are complete, what assets exist, and what remains.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        configPath: { type: 'string', description: 'Path to generate_config.json (or research directory)' },
+      },
+    },
+  },
   {
     name: 'heygen_generate_avatar',
     description: 'Generate an AI avatar video via HeyGen API. The avatar speaks the given text. Returns a videoId that can be polled with heygen_video_status. Requires HEYGEN_API_KEY env var.',
@@ -2052,6 +2136,188 @@ Return JSON with: { "hook": "opening hook text", "body_points": ["point 1", "poi
       } catch (err) {
         return { content: [{ type: 'text', text: JSON.stringify({ error: `Text overlay service error (is it running? Use services_start): ${err.message}` }) }], isError: true };
       }
+    }
+
+    // ── Documentary Pipeline Handlers ─────────────────────────────────────────
+    case 'documentary_produce': {
+      const { topic, chapters = 10, narratorStyle = 'documentary', step = 1, dryRun = false } = args;
+      if (!topic) return { content: [{ type: 'text', text: JSON.stringify({ error: 'topic is required' }) }], isError: true };
+
+      const pipelineDir = path.join(REMOTION_DIR, 'services', 'documentary-pipeline');
+      const scriptPath = path.join(pipelineDir, 'produce_documentary.sh');
+      if (!fs.existsSync(scriptPath)) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: 'produce_documentary.sh not found in services/documentary-pipeline/' }) }], isError: true };
+      }
+
+      const cmdArgs = ['bash', scriptPath, '--topic', topic, '--chapters', String(chapters), '--narrator-style', narratorStyle];
+      if (step > 1) cmdArgs.push('--step', String(step));
+      if (dryRun) cmdArgs.push('--dry-run');
+
+      const jobId = makeJobId();
+      const job = {
+        id: jobId, type: 'documentary', topic, status: 'running',
+        startedAt: new Date().toISOString(), completedAt: null, chapters, narratorStyle,
+      };
+      jobs.set(jobId, job);
+      saveJobs();
+
+      const proc = spawn(cmdArgs[0], cmdArgs.slice(1), { cwd: pipelineDir, stdio: ['ignore', 'pipe', 'pipe'], detached: false });
+      let stdout = '', stderr = '';
+      proc.stdout.on('data', (c) => { stdout += c.toString(); });
+      proc.stderr.on('data', (c) => { stderr += c.toString(); });
+      proc.on('close', (code) => {
+        job.completedAt = new Date().toISOString();
+        job.status = code === 0 ? 'complete' : 'failed';
+        if (code !== 0) job.error = stderr.slice(-500) || stdout.slice(-500);
+        job.output = stdout.slice(-1000);
+        saveJobs();
+      });
+
+      return { content: [{ type: 'text', text: JSON.stringify({
+        success: true, jobId, topic, chapters, narratorStyle,
+        message: dryRun ? 'Dry run — showing what would execute' : 'Documentary pipeline started. Use remotion_job_status to check progress.',
+      }, null, 2) }] };
+    }
+
+    case 'documentary_research': {
+      const { topic, depth = 'standard' } = args;
+      if (!topic) return { content: [{ type: 'text', text: JSON.stringify({ error: 'topic is required' }) }], isError: true };
+
+      const pipelineDir = path.join(REMOTION_DIR, 'services', 'documentary-pipeline');
+      const script = depth === 'deep' ? 'research_topic.py' : 'research_and_generate.py';
+
+      try {
+        const result = spawnSync('python', [script, '--topic', topic], {
+          cwd: pipelineDir, timeout: 300000, stdio: 'pipe',
+          env: { ...process.env, PYTHONPATH: pipelineDir },
+        });
+        const output = result.stdout?.toString().slice(-2000) || '';
+        const error = result.stderr?.toString().slice(-500) || '';
+        return { content: [{ type: 'text', text: JSON.stringify({
+          success: result.status === 0, topic,
+          output: output || error || `exit code ${result.status}`,
+        }, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
+    }
+
+    case 'documentary_generate_script': {
+      const { topic, chapters = 10, narratorStyle = 'documentary', researchDir } = args;
+      if (!topic) return { content: [{ type: 'text', text: JSON.stringify({ error: 'topic is required' }) }], isError: true };
+
+      const pipelineDir = path.join(REMOTION_DIR, 'services', 'documentary-pipeline');
+      const cmdArgs = ['python', 'research_and_generate.py', '--topic', topic, '--chapters', String(chapters), '--narrator-style', narratorStyle];
+      if (researchDir) cmdArgs.push('--research-dir', researchDir);
+
+      try {
+        const result = spawnSync(cmdArgs[0], cmdArgs.slice(1), {
+          cwd: pipelineDir, timeout: 120000, stdio: 'pipe',
+        });
+        return { content: [{ type: 'text', text: JSON.stringify({
+          success: result.status === 0, topic,
+          output: result.stdout?.toString().slice(-2000) || result.stderr?.toString().slice(-500) || '',
+        }, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
+    }
+
+    case 'documentary_voiceover': {
+      const { configPath, voiceId, qaCheck = true } = args;
+      if (!configPath) return { content: [{ type: 'text', text: JSON.stringify({ error: 'configPath is required' }) }], isError: true };
+
+      const pipelineDir = path.join(REMOTION_DIR, 'services', 'documentary-pipeline');
+      const cmdArgs = ['python', 'generate_voiceover_hq.py', '--config', configPath];
+      if (voiceId) cmdArgs.push('--voice-id', voiceId);
+
+      try {
+        const result = spawnSync(cmdArgs[0], cmdArgs.slice(1), {
+          cwd: pipelineDir, timeout: 600000, stdio: 'pipe',
+        });
+
+        let qaResult = null;
+        if (qaCheck && result.status === 0) {
+          const qa = spawnSync('python', ['voice_qa_gate.py', '--config', configPath], {
+            cwd: pipelineDir, timeout: 120000, stdio: 'pipe',
+          });
+          qaResult = qa.stdout?.toString().slice(-1000) || '';
+        }
+
+        return { content: [{ type: 'text', text: JSON.stringify({
+          success: result.status === 0, configPath,
+          voiceoverOutput: result.stdout?.toString().slice(-1000) || '',
+          qaResult,
+        }, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
+    }
+
+    case 'documentary_render_props': {
+      const { configPath, outputPath } = args;
+      const pipelineDir = path.join(REMOTION_DIR, 'services', 'documentary-pipeline');
+      const cmdArgs = ['python', 'generate_render_props.py'];
+      if (configPath) cmdArgs.push('--config', configPath);
+      if (outputPath) cmdArgs.push('--output', outputPath);
+
+      try {
+        const result = spawnSync(cmdArgs[0], cmdArgs.slice(1), {
+          cwd: pipelineDir, timeout: 60000, stdio: 'pipe',
+        });
+        return { content: [{ type: 'text', text: JSON.stringify({
+          success: result.status === 0,
+          output: result.stdout?.toString().slice(-1000) || result.stderr?.toString().slice(-500) || '',
+        }, null, 2) }] };
+      } catch (err) {
+        return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true };
+      }
+    }
+
+    case 'documentary_status': {
+      const pipelineDir = path.join(REMOTION_DIR, 'services', 'documentary-pipeline');
+      const status = {
+        pipelineInstalled: fs.existsSync(pipelineDir),
+        scripts: {},
+        researchDirs: [],
+        assets: { audio: 0, transcripts: 0, sceneImages: 0, characters: 0 },
+      };
+
+      // Check scripts exist
+      const scripts = ['research_topic.py', 'generate_voiceover_hq.py', 'transcribe_whisper.py',
+        'build_scene_timings.py', 'generate_render_props.py', 'generate_characters.py',
+        'generate_all_scene_images.py', 'upload_youtube.py', 'voice_qa_gate.py', 'produce_documentary.sh'];
+      for (const s of scripts) {
+        status.scripts[s] = fs.existsSync(path.join(pipelineDir, s));
+      }
+
+      // Check research directories
+      const researchDir = path.join(pipelineDir, 'research');
+      if (fs.existsSync(researchDir)) {
+        try {
+          status.researchDirs = fs.readdirSync(researchDir, { withFileTypes: true })
+            .filter(d => d.isDirectory()).map(d => d.name);
+        } catch {}
+      }
+
+      // Check generated assets
+      for (const [dir, key] of [['audio', 'audio'], ['transcripts', 'transcripts'], ['scene_images', 'sceneImages'], ['characters', 'characters']]) {
+        const p = path.join(pipelineDir, dir);
+        if (fs.existsSync(p)) {
+          try { status.assets[key] = fs.readdirSync(p).length; } catch {}
+        }
+      }
+
+      // Check render props
+      status.renderPropsExists = fs.existsSync(path.join(pipelineDir, 'render_props_v3.json'));
+
+      // Check Python
+      try {
+        const py = spawnSync('python', ['--version'], { timeout: 5000, stdio: 'pipe' });
+        status.pythonVersion = py.stdout?.toString().trim() || py.stderr?.toString().trim();
+      } catch { status.pythonVersion = 'not found'; }
+
+      return { content: [{ type: 'text', text: JSON.stringify(status, null, 2) }] };
     }
 
     // ── Template Marketplace Handlers ─────────────────────────────────────────
