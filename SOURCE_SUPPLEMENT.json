@@ -1,0 +1,32 @@
+{
+  "supplements_snapshot": "a2830de84b3de6f7-r2",
+  "source_roots": [
+    "C:/Users/Isaia/Documents/Coding/Remotion/remotion-mcp-studio"
+  ],
+  "files": {
+    "src/api/render/logs/[jobId]/route.ts": {
+      "source": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\src\\api\\render\\logs\\[jobId]\\route.ts",
+      "reason": "portable authored code absent from staged source selection"
+    },
+    "src/data/__tests__/segment-engine.test.ts": {
+      "source": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\src\\data\\__tests__\\segment-engine.test.ts",
+      "reason": "portable authored code absent from staged source selection"
+    },
+    "src/data/example.ts": {
+      "source": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\src\\data\\example.ts",
+      "reason": "portable authored code absent from staged source selection"
+    },
+    "src/data/growth-data-plane.ts": {
+      "source": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\src\\data\\growth-data-plane.ts",
+      "reason": "portable authored code absent from staged source selection"
+    },
+    "src/data/segment-engine.ts": {
+      "source": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\src\\data\\segment-engine.ts",
+      "reason": "portable authored code absent from staged source selection"
+    },
+    "src/data/segment-integration.ts": {
+      "source": "C:\\Users\\Isaia\\Documents\\Coding\\Remotion\\remotion-mcp-studio\\src\\data\\segment-integration.ts",
+      "reason": "portable authored code absent from staged source selection"
+    }
+  }
+}
