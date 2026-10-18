@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-07-06",
+  "tracks": [
+    {
+      "id": "corporate-tech",
+      "file_path": "/app/soundcloud_music/royalty-free-music-envato - Cool Car - BeardMusicStock.mp3",
+      "genre": "corporate",
+      "moods": ["professional", "upbeat", "confident", "technology"],
+      "energy_level": 7,
+      "tempo": "medium",
+      "attributes": ["no vocals", "business", "modern", "clean"]
+    },
+    {
+      "id": "lofi-chill",
+      "file_path": "/app/soundcloud_music/oatmello - dippin dots w goosetaf.mp3",
+      "genre": "lofi",
+      "moods": ["relaxed", "thoughtful", "chill", "creative"],
+      "energy_level": 3,
+      "tempo": "slow",
+      "attributes": ["beats", "relaxing", "focus", "ambient"]
+    },
+    {
+      "id": "ambient-calm",
+      "file_path": "/app/soundcloud_music/sweet-medicine - ocean waves.mp3",
+      "genre": "ambient",
+      "moods": ["peaceful", "serene", "thoughtful", "meditative"],
+      "energy_level": 2,
+      "tempo": "very slow",
+      "attributes": ["atmospheric", "calm", "background", "nature"]
+    },
+    {
+      "id": "electronic-upbeat",
+      "file_path": "/app/soundcloud_music/knock2music - ROOM202 (Live From Los Angeles).mp3",
+      "genre": "electronic",
+      "moods": ["energetic", "exciting", "upbeat", "dynamic"],
+      "energy_level": 8,
+      "tempo": "fast",
+      "attributes": ["electronic", "festival", "energetic", "modern"]
+    },
+    {
+      "id": "hip-hop-flow",
+      "file_path": "/app/soundcloud_music/jboogz18 - Broke Boy (Love Sosa Flip).mp3",
+      "genre": "hiphop",
+      "moods": ["confident", "urban", "powerful", "bold"],
+      "energy_level": 7,
+      "tempo": "medium",
+      "attributes": ["beats", "rhythmic", "urban", "modern"]
+    },
+    {
+      "id": "house-groove",
+      "file_path": "/app/soundcloud_music/shift-key - Deep Inside - Shift K3Y Dub - (Extended Mix).mp3",
+      "genre": "house",
+      "moods": ["groovy", "uplifting", "positive", "energetic"],
+      "energy_level": 6,
+      "tempo": "medium-fast",
+      "attributes": ["electronic", "dance", "rhythmic", "club"]
+    },
+    {
+      "id": "general-positive",
+      "file_path": "/app/soundcloud_music/protostar - Protostar Alora - Affection (ft. Danyka Nadeau).mp3",
+      "genre": "general",
+      "moods": ["positive", "uplifting", "emotional", "hopeful"],
+      "energy_level": 6,
+      "tempo": "medium",
+      "attributes": ["vocals", "melodic", "inspirational", "dynamic"]
+    }
+  ]
+}

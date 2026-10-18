@@ -1,0 +1,86 @@
+{
+  "0bafde7b21cde183ad5139e5cf7f0f98": {
+    "file_path": "music_library\\electronic\\lystro-640670887 - IMANU  KU\u010cKA - Its Our Destiny LYSTRO remix.aac",
+    "name": "lystro-640670887 - IMANU  KU\u010cKA - Its Our Destiny LYSTRO remix",
+    "genre": "electronic",
+    "mood": "intense",
+    "energy_level": "high",
+    "tempo": "fast",
+    "themes": [
+      "futuristic",
+      "adventure",
+      "transformation"
+    ],
+    "size_mb": 2.95
+  },
+  "b6228e9e822656a50427c191b0235ab0": {
+    "file_path": "music_library\\general\\1800blkout - john summit  hayla - shiver blkout bootleg.aac",
+    "name": "1800blkout - john summit  hayla - shiver blkout bootleg",
+    "genre": "general",
+    "mood": "energetic",
+    "energy_level": "high",
+    "tempo": "fast",
+    "themes": [
+      "party",
+      "nightlife",
+      "dance"
+    ],
+    "size_mb": 4.7
+  },
+  "c4423b646c6902314ec41fb064431247": {
+    "file_path": "music_library\\general\\craetion - Summer Sky.aac",
+    "name": "craetion - Summer Sky",
+    "genre": "general",
+    "mood": "chill",
+    "energy_level": "medium",
+    "tempo": "medium",
+    "themes": [
+      "summer",
+      "relaxation",
+      "nature"
+    ],
+    "size_mb": 3.09
+  },
+  "0e96eac8f8eaf15e174a3c3071802a20": {
+    "file_path": "music_library\\general\\itslostindreams - Drvmmer - Imagination feat Artika.aac",
+    "name": "itslostindreams - Drvmmer - Imagination feat Artika",
+    "genre": "general",
+    "mood": "dreamy",
+    "energy_level": "medium",
+    "tempo": "medium",
+    "themes": [
+      "imagination",
+      "exploration",
+      "creativity"
+    ],
+    "size_mb": 3.76
+  },
+  "6cf23a9086c0e355b2e9dd0394d8c435": {
+    "file_path": "music_library\\general\\konteks - tropical.aac",
+    "name": "konteks - tropical",
+    "genre": "general",
+    "mood": "chill",
+    "energy_level": "medium",
+    "tempo": "medium",
+    "themes": [
+      "tropical",
+      "relaxation",
+      "vacation"
+    ],
+    "size_mb": 2.05
+  },
+  "1030e92a7ea20f731b8254bf88cc99b8": {
+    "file_path": "music_library\\general\\officialyussi - YUSSI ROLLING MEADOWS FULL SET Free Download  Du.aac",
+    "name": "officialyussi - YUSSI ROLLING MEADOWS FULL SET Free Download  Du",
+    "genre": "general",
+    "mood": "chill",
+    "energy_level": "medium",
+    "tempo": "medium",
+    "themes": [
+      "nature",
+      "relaxation",
+      "exploration"
+    ],
+    "size_mb": 67.32
+  }
+}

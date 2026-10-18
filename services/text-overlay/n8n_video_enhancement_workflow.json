@@ -1,0 +1,553 @@
+{
+  "meta": {
+    "instanceId": "video_enhancement_api_workflow",
+    "created": "2025-07-02T22:07:00.000Z",
+    "updated": "2025-07-02T22:07:00.000Z"
+  },
+  "name": "Flask Video Enhancement API - Complete Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "manual_trigger",
+      "name": "🎬 Start Video Processing",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "video_filename",
+              "name": "video_filename",
+              "value": "v12044gd0000cu2t04nog65p7djql4g0.MP4",
+              "type": "string"
+            },
+            {
+              "id": "flask_api_base",
+              "name": "flask_api_base",
+              "value": "http://localhost:5003",
+              "type": "string"
+            },
+            {
+              "id": "music_volume_db",
+              "name": "music_volume_db",
+              "value": -25,
+              "type": "number"
+            },
+            {
+              "id": "music_volume_linear",
+              "name": "music_volume_linear",
+              "value": 0.003162,
+              "type": "number"
+            },
+            {
+              "id": "text_style",
+              "name": "text_style",
+              "value": "modern",
+              "type": "string"
+            },
+            {
+              "id": "min_compatibility_score",
+              "name": "min_compatibility_score",
+              "value": 0.6,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set_config",
+      "name": "⚙️ Set Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.flask_api_base }}/health",
+        "options": {}
+      },
+      "id": "health_check",
+      "name": "🔍 API Health Check",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.flask_api_base }}/analyze/music-match/{{ $json.video_filename }}",
+        "options": {}
+      },
+      "id": "analyze_music",
+      "name": "🎵 Analyze Music Match",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "best_music_path",
+              "name": "best_music_path",
+              "value": "={{ $json.music_recommendations.best_match.music_path }}",
+              "type": "string"
+            },
+            {
+              "id": "best_music_name",
+              "name": "best_music_name",
+              "value": "={{ $json.music_recommendations.best_match.music_name }}",
+              "type": "string"
+            },
+            {
+              "id": "compatibility_score",
+              "name": "compatibility_score",
+              "value": "={{ $json.music_recommendations.best_match.compatibility_score }}",
+              "type": "number"
+            },
+            {
+              "id": "mood_match",
+              "name": "mood_match",
+              "value": "={{ $json.music_recommendations.best_match.mood_match }}",
+              "type": "string"
+            },
+            {
+              "id": "energy_match",
+              "name": "energy_match",
+              "value": "={{ $json.music_recommendations.best_match.energy_match }}",
+              "type": "string"
+            },
+            {
+              "id": "theme_match",
+              "name": "theme_match",
+              "value": "={{ $json.music_recommendations.best_match.theme_match }}",
+              "type": "string"
+            },
+            {
+              "id": "total_tracks_analyzed",
+              "name": "total_tracks_analyzed",
+              "value": "={{ $json.music_recommendations.total_tracks_analyzed }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "extract_music_data",
+      "name": "📊 Extract Music Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "compatibility_check",
+              "leftValue": "={{ $json.compatibility_score }}",
+              "rightValue": "={{ $json.min_compatibility_score }}",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "compatibility_check",
+      "name": "✅ Check Compatibility",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.flask_api_base }}/process/smart-video",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "video_filename",
+              "value": "={{ $json.video_filename }}"
+            },
+            {
+              "name": "music_path",
+              "value": "={{ $json.best_music_path }}"
+            },
+            {
+              "name": "config",
+              "value": "={{ {\n  \"music_volume\": $json.music_volume_linear,\n  \"text_style\": $json.text_style,\n  \"min_compatibility_score\": $json.min_compatibility_score\n} }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "process_video",
+      "name": "🎬 Process Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "output_filename",
+              "name": "output_filename",
+              "value": "={{ $json.output_filename }}",
+              "type": "string"
+            },
+            {
+              "id": "download_url",
+              "name": "download_url",
+              "value": "={{ $json.download_url }}",
+              "type": "string"
+            },
+            {
+              "id": "processing_time",
+              "name": "processing_time",
+              "value": "={{ $json.processing_time_seconds }}",
+              "type": "number"
+            },
+            {
+              "id": "text_overlay_used",
+              "name": "text_overlay_used",
+              "value": "={{ $json.text_overlay }}",
+              "type": "string"
+            },
+            {
+              "id": "full_download_url",
+              "name": "full_download_url",
+              "value": "={{ $json.flask_api_base }}{{ $json.download_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "extract_results",
+      "name": "📤 Extract Results",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1780, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.full_download_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "file",
+              "outputPropertyName": "enhanced_video_file"
+            }
+          }
+        }
+      },
+      "id": "download_video",
+      "name": "⬇️ Download Enhanced Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "final_summary",
+              "name": "final_summary",
+              "value": "=🎉 VIDEO ENHANCEMENT COMPLETE!\n\n📹 Original Video: {{ $json.video_filename }}\n🎵 Music Added: {{ $json.best_music_name }}\n🔊 Volume Level: {{ $json.music_volume_db }}dB ({{ $json.music_volume_linear }} linear)\n💯 Compatibility Score: {{ $json.compatibility_score }}/1.0\n📝 Text Overlay: {{ $json.text_overlay_used }}\n⏱️ Processing Time: {{ $json.processing_time }}s\n📁 Output File: {{ $json.output_filename }}\n🔗 Download URL: {{ $json.full_download_url }}\n\n✨ Music Match Analysis:\n- Mood Match: {{ $json.mood_match }}\n- Energy Match: {{ $json.energy_match }}\n- Theme Match: {{ $json.theme_match }}\n- Total Tracks Analyzed: {{ $json.total_tracks_analyzed }}",
+              "type": "string"
+            },
+            {
+              "id": "success_flag",
+              "name": "success_flag",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "final_summary",
+      "name": "📋 Final Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2220, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "error_message",
+              "name": "error_message",
+              "value": "❌ COMPATIBILITY TOO LOW!\n\nThe best music match has a compatibility score of {{ $json.compatibility_score }}, which is below the minimum threshold of {{ $json.min_compatibility_score }}.\n\n🎵 Best Available Match:\n- Music: {{ $json.best_music_name }}\n- Compatibility: {{ $json.compatibility_score }}/1.0\n- Mood Match: {{ $json.mood_match }}\n- Energy Match: {{ $json.energy_match }}\n- Theme Match: {{ $json.theme_match }}\n\n💡 Suggestions:\n1. Lower the minimum compatibility score\n2. Add more music tracks to your library\n3. Process the video manually with the current best match",
+              "type": "string"
+            },
+            {
+              "id": "success_flag",
+              "name": "success_flag",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "compatibility_error",
+      "name": "⚠️ Compatibility Too Low",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1560, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "success_check",
+              "leftValue": "={{ $json.success_flag }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "final_check",
+      "name": "🏁 Final Status Check",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2440, 300]
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.final_summary }}",
+        "options": {}
+      },
+      "id": "success_notification",
+      "name": "✅ Success Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [2660, 200],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.error_message }}",
+        "options": {}
+      },
+      "id": "error_notification",
+      "name": "❌ Error Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.1,
+      "position": [2660, 400],  
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "manual_trigger": {
+      "main": [
+        [
+          {
+            "node": "set_config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set_config": {
+      "main": [
+        [
+          {
+            "node": "health_check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "health_check": {
+      "main": [
+        [
+          {
+            "node": "analyze_music",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "analyze_music": {
+      "main": [
+        [
+          {
+            "node": "extract_music_data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract_music_data": {
+      "main": [
+        [
+          {
+            "node": "compatibility_check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "compatibility_check": {
+      "main": [
+        [
+          {
+            "node": "process_video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "compatibility_error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "process_video": {
+      "main": [
+        [
+          {
+            "node": "extract_results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extract_results": {
+      "main": [
+        [
+          {
+            "node": "download_video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download_video": {
+      "main": [
+        [
+          {
+            "node": "final_summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "final_summary": {
+      "main": [
+        [
+          {
+            "node": "final_check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "compatibility_error": {
+      "main": [
+        [
+          {
+            "node": "final_check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "final_check": {
+      "main": [
+        [
+          {
+            "node": "success_notification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "error_notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-02T22:07:00.000Z",
+      "updatedAt": "2025-07-02T22:07:00.000Z",
+      "id": "video_enhancement",
+      "name": "Video Enhancement"
+    },
+    {
+      "createdAt": "2025-07-02T22:07:00.000Z", 
+      "updatedAt": "2025-07-02T22:07:00.000Z",
+      "id": "flask_api",
+      "name": "Flask API"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-02T22:07:00.000Z",
+  "versionId": "1"
+}

@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  smart-overlay:
+    build: .
+    volumes:
+      - ./input_videos:/app/input_videos
+      - ./outputs:/app/outputs
+      - ./config.yaml:/app/config.yaml
+      - ./fonts:/app/fonts
+    environment:
+      - OPENAI_KEY=${OPENAI_KEY}
+    command: >
+      --input_dir /app/input_videos
+      --output_dir /app/outputs
+      --config /app/config.yaml
+      --preset TechMeStuff
+      --prompt "${PROMPT:-5 ways to automate your business now}"
+
+  # Flask Video Enhancement API
+  video-enhancer-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: video-enhancer-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./shared_data:/shared_data:ro  # Read-only access to shared videos
+      - ./enhanced_videos:/app/enhanced_videos  # Output directory
+      - ./soundcloud_tracks.xlsx:/app/soundcloud_tracks.xlsx:ro  # SoundCloud tracks
+      - ./processing_log.csv:/app/processing_log.csv  # CSV logging
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SHARED_VIDEOS_DIR=/shared_data
+      - OUTPUT_DIR=/app/enhanced_videos
+      - SOUNDCLOUD_EXCEL_PATH=/app/soundcloud_tracks.xlsx
+      - CSV_LOG_PATH=/app/processing_log.csv
+      - FLASK_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - video-processing
+
+  # N8N Workflow Automation (optional - for testing)
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=changeme
+      - WEBHOOK_URL=http://localhost:5678
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./shared_data:/shared_data:ro  # Access to same video directory
+    restart: unless-stopped
+    depends_on:
+      - video-enhancer-api
+    networks:
+      - video-processing
+
+volumes:
+  n8n_data:
+    driver: local
+
+networks:
+  video-processing:
+    driver: bridge

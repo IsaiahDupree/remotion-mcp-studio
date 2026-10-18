@@ -1,0 +1,11 @@
+# Documentary Pipeline - Python Dependencies
+anthropic>=0.32.0
+openai>=1.12.0
+requests>=2.31.0
+librosa>=0.10.1
+scipy>=1.11.0
+numpy>=1.24.3
+google-auth>=2.25.0
+google-auth-oauthlib>=1.2.0
+google-api-python-client>=2.100.0
+python-dotenv>=1.0.0

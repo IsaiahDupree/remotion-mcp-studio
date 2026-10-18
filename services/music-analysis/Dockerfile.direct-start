@@ -1,0 +1,40 @@
+FROM python:3.11-slim
+
+# Install minimal system dependencies needed for audio/video processing
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    curl \
+    libsndfile1 \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements and install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
+
+# Create necessary directories
+RUN mkdir -p /app/cache/temp_video
+RUN mkdir -p /app/output
+
+# Copy all Python files
+COPY *.py ./
+
+# Print current directory contents for debugging
+RUN ls -la
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV FLASK_APP=enhanced_flask_api.py
+ENV FLASK_ENV=development
+ENV PYTHONUNBUFFERED=1
+# OPENAI_API_KEY should be set via environment variable or docker-compose
+# ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+
+# Expose port 5001
+EXPOSE 5001
+
+# Start the Flask application directly with gunicorn for more stability
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "1", "--timeout", "300", "enhanced_flask_api:app"]

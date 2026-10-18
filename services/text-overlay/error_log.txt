@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "examples\batch_process.py", line 22, in <module>
+    from smart_overlay import process_batch, load_config, setup_openai_client, setup_models
+  File "C:\Users\Isaia\Documents\WordsOnText\smart_overlay.py", line 33, in <module>
+    from ultralytics import YOLO
+ModuleNotFoundError: No module named 'ultralytics'

@@ -1,0 +1,110 @@
+{
+  "9aa64d9b5f08d2a039205a206caa1470": {
+    "video_path": "C:\\Users\\Isaia\\Documents\\Coding\\N8N\\shared\\videos\\v12044gd0000cu2t04nog65p7djql4g0.MP4",
+    "matches": [
+      {
+        "music_path": "music_library\\general\\itslostindreams - Drvmmer - Imagination feat Artika.aac",
+        "compatibility_score": 0.7,
+        "reasoning": "The music track 'itslostindreams - Drvmmer - Imagination feat Artika' has a dreamy mood and medium energy level, which partially aligns with the calm and low-energy visual mood of the video. The themes of 'imagination' and 'exploration' in the music can complement the 'nighttime' and 'vehicles' themes of the video by adding a sense of wonder and curiosity. However, the medium energy level of the music might slightly overpower the low-energy visuals, making the match less than perfect.",
+        "mood_match": "good",
+        "energy_match": "fair",
+        "theme_match": "good"
+      },
+      {
+        "music_path": "music_library\\general\\craetion - Summer Sky.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The video has a calm visual mood with a low energy level, set in a nighttime parking lot with vehicles. The music track 'craetion - Summer Sky' has a chill mood and medium energy level, with themes of summer, relaxation, and nature. While the chill mood of the music aligns well with the calm visual mood of the video, the medium energy level of the track may slightly overpower the low energy of the video. Additionally, the themes of summer and nature in the music do not directly align with the nighttime and parking lot themes of the video. However, the overall relaxed vibe of the music can still complement the calmness of the video.",
+        "mood_match": "good",
+        "energy_match": "fair",
+        "theme_match": "poor"
+      },
+      {
+        "music_path": "music_library\\general\\konteks - tropical.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The video has a calm visual mood with a low energy level, set in a nighttime parking lot with vehicles. The music track 'konteks - tropical' has a chill mood and medium energy level, which could slightly overpower the video's calmness. The tropical and vacation themes of the music do not align well with the nighttime and parking lot themes of the video. However, the chill mood of the music can complement the calm visual mood to some extent, making it a fair match overall.",
+        "mood_match": "good",
+        "energy_match": "fair",
+        "theme_match": "poor"
+      },
+      {
+        "music_path": "music_library\\general\\officialyussi - YUSSI ROLLING MEADOWS FULL SET Free Download  Du.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The music track 'officialyussi - YUSSI ROLLING MEADOWS FULL SET Free Download Du' has a chill mood and medium energy level, which partially aligns with the video's calm visual mood and low energy level. However, the music's themes of 'nature', 'relaxation', and 'exploration' do not strongly align with the video's themes of 'nighttime', 'parking lot', and 'vehicles'. The tempo of the music is medium, which might slightly overpower the low-energy visuals, but the chill mood can complement the calm atmosphere of the video.",
+        "mood_match": "good",
+        "energy_match": "fair",
+        "theme_match": "poor"
+      },
+      {
+        "music_path": "music_library\\electronic\\lystro-640670887 - IMANU  KU\u010cKA - Its Our Destiny LYSTRO remix.aac",
+        "compatibility_score": 0.35,
+        "reasoning": "The video has a calm visual mood with a low energy level, focusing on nighttime and vehicles in a parking lot. In contrast, the music track is intense, high-energy, and fast-paced, with themes of futurism and adventure. This creates a significant mismatch in mood and energy, as the music's intensity and speed could overwhelm the video's calm and low-energy visuals. The thematic elements of 'futuristic' and 'transformation' in the music do not align well with the video's more grounded themes of 'nighttime' and 'vehicles'.",
+        "mood_match": "poor",
+        "energy_match": "poor",
+        "theme_match": "fair"
+      },
+      {
+        "music_path": "music_library\\general\\1800blkout - john summit  hayla - shiver blkout bootleg.aac",
+        "compatibility_score": 0.35,
+        "reasoning": "The video has a calm visual mood with a low energy level, focusing on nighttime and vehicles in a parking lot. In contrast, the music track '1800blkout - john summit hayla - shiver blkout bootleg' is energetic with a high energy level and fast tempo, themed around party and nightlife. This creates a significant mismatch in mood and energy, as the music's high energy and party vibe do not align with the calm and low-energy visuals of the video. The thematic connection is weak as well, since the video focuses on a more subdued nighttime setting rather than an active nightlife scene.",
+        "mood_match": "poor",
+        "energy_match": "poor",
+        "theme_match": "fair"
+      }
+    ],
+    "created_at": 1751509802.7485769
+  },
+  "67355ec0953cbdf039fc0ea7bf687775": {
+    "video_path": "C:\\Users\\Isaia\\Documents\\Coding\\N8N\\shared\\videos\\optimized_IMG_3271.MP4",
+    "matches": [
+      {
+        "music_path": "music_library\\electronic\\lystro-640670887 - IMANU  KU\u010cKA - Its Our Destiny LYSTRO remix.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The music track 'Its Our Destiny LYSTRO remix' by IMANU KU\u010cKA has an intense mood and high energy level, which may overpower the medium energy level of the educational video. The fast tempo of the track could potentially distract from the educational content, which requires focus and clarity. However, the themes of 'futuristic' and 'transformation' align well with the video's themes of 'online income' and 'motivation', suggesting a forward-thinking and transformative approach to financial advice. The energetic visual mood of the video can somewhat accommodate the intense music, but the overall mismatch in energy levels and mood may reduce the effectiveness of the pairing.",
+        "mood_match": "fair",
+        "energy_match": "poor",
+        "theme_match": "good"
+      },
+      {
+        "music_path": "music_library\\general\\craetion - Summer Sky.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The video is educational with an energetic visual mood and focuses on themes like online income and financial advice, which require a motivational and engaging background. The music track 'craetion - Summer Sky' has a chill mood and themes of summer and relaxation, which may not fully align with the motivational aspect needed for financial advice content. However, both the video and music have a medium energy level and tempo, which provides some level of compatibility. The music's relaxing nature might not fully support the energetic and motivational tone of the video, but it can still provide a pleasant background without being too distracting.",
+        "mood_match": "fair",
+        "energy_match": "good",
+        "theme_match": "poor"
+      },
+      {
+        "music_path": "music_library\\general\\itslostindreams - Drvmmer - Imagination feat Artika.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The music track 'itslostindreams - Drvmmer - Imagination feat Artika' has a dreamy mood which partially aligns with the motivational aspect of the video. However, the dreamy mood may not fully complement the energetic visual mood and the educational content focused on financial advice. The energy levels of both the video and music are medium, which is a good match, but the themes of imagination and exploration in the music do not strongly align with the video's themes of online income and financial advice.",
+        "mood_match": "fair",
+        "energy_match": "excellent",
+        "theme_match": "fair"
+      },
+      {
+        "music_path": "music_library\\general\\konteks - tropical.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The video is educational with an energetic visual mood and focuses on themes like online income and financial advice. The music track 'konteks - tropical' has a chill mood with themes of relaxation and vacation, which may not fully align with the motivational and financial themes of the video. However, both the video and music have a medium energy level and tempo, which provides some level of compatibility. The tropical and relaxing nature of the music might not fully support the motivational aspect of the video, but it could provide a calming background that doesn't distract from the educational content.",
+        "mood_match": "fair",
+        "energy_match": "good",
+        "theme_match": "poor"
+      },
+      {
+        "music_path": "music_library\\general\\officialyussi - YUSSI ROLLING MEADOWS FULL SET Free Download  Du.aac",
+        "compatibility_score": 0.65,
+        "reasoning": "The video is educational with an energetic visual mood and focuses on themes like online income and financial advice, which typically require a motivational and engaging background track. The music track, with its chill mood and themes of nature and relaxation, may not fully align with the video's intent to motivate and energize the audience. However, both the video and music share a medium energy level and tempo, which provides some level of compatibility. The music's exploration theme could loosely connect with the idea of exploring new financial opportunities, but the overall thematic alignment is weak.",
+        "mood_match": "fair",
+        "energy_match": "good",
+        "theme_match": "fair"
+      },
+      {
+        "music_path": "music_library\\general\\1800blkout - john summit  hayla - shiver blkout bootleg.aac",
+        "compatibility_score": 0.55,
+        "reasoning": "The music track '1800blkout - john summit hayla - shiver blkout bootleg' is highly energetic and fast-paced, which may overpower the educational content of the video. While the energetic mood of the music aligns with the visual mood of the video, the high energy level and party-themed music do not align well with the medium energy level and financial advice themes of the video. The music's themes of 'party', 'nightlife', and 'dance' are not compatible with the video's themes of 'online income', 'financial advice', and 'motivation'.",
+        "mood_match": "good",
+        "energy_match": "poor",
+        "theme_match": "poor"
+      }
+    ],
+    "created_at": 1751510145.3605251
+  }
+}

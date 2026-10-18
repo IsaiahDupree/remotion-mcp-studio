@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  flask-video-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    container_name: flask-video-enhancement-api
+    ports:
+      - "5003:5003"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - FLASK_ENV=production
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SHARED_VIDEO_DIR=/app/shared
+      - ENHANCED_VIDEO_DIR=/app/enhanced_videos
+      - SOUNDCLOUD_EXCEL_PATH=/app/soundcloud_tracks.xlsx
+      - LOG_FILE_PATH=/app/processing_log.csv
+    env_file:
+      - .env
+    volumes:
+      # Mount shared directories for video processing
+      - "${SHARED_VIDEO_DIR:-C:/Users/Isaia/Documents/Coding/N8N/shared/videos}:/app/shared:rw"
+      - "./enhanced_videos:/app/enhanced_videos:rw"
+      - "./music_library:/app/music_library:ro"
+      - "./processing_log.csv:/app/processing_log.csv:rw"
+      - "./soundcloud_tracks.xlsx:/app/soundcloud_tracks.xlsx:ro"
+      # Mount application code for development (optional)
+      - "./video_enhancer:/app/video_enhancer:ro"
+      - "./utils:/app/utils:ro"
+    networks:
+      - video-processing
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  # Optional: Redis for caching (if needed)
+  redis:
+    image: redis:7-alpine
+    container_name: flask-video-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - video-processing
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
+networks:
+  video-processing:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local

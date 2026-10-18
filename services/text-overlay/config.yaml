@@ -1,0 +1,33 @@
+video:
+  min_font_size: 38
+  max_font_size: 72
+  fade_in_sec: 0.35
+  safe_caption_height_pct: 15
+overlay:
+  font: "./fonts/Inter-Bold.ttf"
+  color: "white"
+  stroke: 
+    width: 2
+    color: "black"
+models:
+  whisper_model: "medium"
+  clip_model: "ViT-B/32"
+  gpt_model: "gpt-4o-mini"
+  yolo_model: "yolov8n"
+weights:
+  transcript: 0.30
+  vision: 0.30
+  prompt: 0.40
+sampling:
+  short_interval_sec: 10
+  long_interval_sec: 30
+thresholds:
+  min_mask_area_pct: 5
+gpu:
+  use_gpu: true  # Set to false to force CPU-only mode
+  half_precision: true  # Use half precision (FP16) for models if supported
+  batch_size: 2  # Batch size for processing multiple frames
+  use_nvenc: true  # Use NVIDIA hardware encoding if available
+webhook:
+  enabled: false  # Set to true to enable webhook notifications
+  url: ""  # URL to send webhook notifications to

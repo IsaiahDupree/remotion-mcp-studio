@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  flaskdrive:
+    build:
+      context: ./flaskdrive
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./flaskdrive/data:/srv/data:rw"
+      - "./shared/videos:/srv/videos:rw"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY:-change_this_to_a_secure_random_string}
+      - MAX_CONTENT_LENGTH=10737418240  # 10GB max upload
+      - OAUTHLIB_INSECURE_TRANSPORT=1  # Only for development, remove in production
+    networks:
+      - video-tools-network
+
+  video-generator:
+    build:
+      context: ./music-system
+      dockerfile: Dockerfile.video-generator
+    restart: always
+    ports:
+      - "5001:5001"
+    volumes:
+      - /tmp:/tmp
+      - "./soundcloud_music:/srv/soundcloud_music:ro"
+      - "./shared/videos:/srv/videos:ro"
+      - "./shared/fonts:/srv/fonts:ro"
+      - "./cache:/srv/cache:rw"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - video-tools-network
+
+networks:
+  video-tools-network:
+    driver: bridge
+
+volumes:
+  flaskdrive_data:
+  cache_data:
+
